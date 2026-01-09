@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>写实小太阳鹦鹉 - 刷新换色静态主页</title>
+    <title>左侧面写实小太阳鹦鹉 - 刷新换色静态主页</title>
     <style>
         * {
             margin: 0;
@@ -30,10 +30,10 @@
             text-align: center;
         }
 
-        /* 写实鹦鹉容器（响应式适配，保持图案比例） */
+        /* 侧面鹦鹉容器（响应式适配，保持侧面比例） */
         .parrot-container {
             width: 100%;
-            max-width: 500px;
+            max-width: 550px;
             height: auto;
             transition: all 0.3s ease;
         }
@@ -51,76 +51,65 @@
             }
 
             .parrot-container {
-                max-width: 380px;
+                max-width: 400px;
             }
         }
     </style>
 </head>
 <body>
-    <h1 class="page-title">写实小太阳鹦鹉 - 刷新换色</h1>
-    <!-- SVG绘制写实小太阳鹦鹉（核心：多层元素叠加实现写实感，无图片） -->
-    <!-- 小太阳鹦鹉写实特征：红橙颊斑、分层翅膀、流线型身体、长尾羽纹理、弯钩喙、写实爪部、眼白+瞳孔 -->
+    <h1 class="page-title">左侧面写实小太阳鹦鹉 - 刷新换色</h1>
+    <!-- SVG绘制左侧面写实小太阳鹦鹉（核心：侧面布局+单侧细节，无图片） -->
+    <!-- 侧面特征：头往左（鹦鹉左侧面）、单侧颊斑、侧面弯钩喙、单侧翅膀、侧身流线型身体、长尾向后延伸 -->
     <div class="parrot-container" id="parrotContainer">
-        <svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
-            <!-- 1. 长尾羽（分层实现写实感，小太阳鹦鹉标志性长尾） -->
-            <path class="parrot-part" id="tailOuter1" d="M180,450 C150,580 160,590 190,480 Z" fill="#e0a800" stroke="#2d3436" stroke-width="1.5"/>
-            <path class="parrot-part" id="tailOuter2" d="M220,450 C250,580 240,590 210,480 Z" fill="#e0a800" stroke="#2d3436" stroke-width="1.5"/>
-            <path class="parrot-part" id="tailInner1" d="M190,440 C170,550 180,560 200,460 Z" fill="#f1c40f" stroke="#2d3436" stroke-width="1.5"/>
-            <path class="parrot-part" id="tailInner2" d="M210,440 C230,550 220,560 200,460 Z" fill="#f1c40f" stroke="#2d3436" stroke-width="1.5"/>
-            <!-- 2. 身体/腹部（双层叠加模拟光影，更写实） -->
-            <ellipse class="parrot-part" id="bodyMain" cx="200" cy="350" rx="70" ry="90" fill="#f3d44f" stroke="#2d3436" stroke-width="2"/>
-            <ellipse class="parrot-part" id="bodyShadow" cx="190" cy="360" rx="60" ry="80" fill="#e9c947" stroke="none" opacity="0.7"/>
-            <!-- 3. 翅膀（分层绘制：初级飞羽+次级飞羽，还原鹦鹉翅膀结构） -->
-            <!-- 左侧翅膀 -->
-            <path class="parrot-part" id="wingLeftPrimary" d="M130,300 C90,250 80,350 130,400 Z" fill="#d4ac00" stroke="#2d3436" stroke-width="1.5"/>
-            <path class="parrot-part" id="wingLeftSecondary" d="M130,300 C110,270 110,330 130,360 Z" fill="#e6b800" stroke="#2d3436" stroke-width="1.5"/>
-            <!-- 右侧翅膀 -->
-            <path class="parrot-part" id="wingRightPrimary" d="M270,300 C310,250 320,350 270,400 Z" fill="#d4ac00" stroke="#2d3436" stroke-width="1.5"/>
-            <path class="parrot-part" id="wingRightSecondary" d="M270,300 C290,270 290,330 270,360 Z" fill="#e6b800" stroke="#2d3436" stroke-width="1.5"/>
-            <!-- 4. 颈部（带弧度，贴合身体与头部的衔接） -->
-            <path class="parrot-part" id="neck" d="M180,260 C170,280 230,280 220,260 C230,220 170,220 180,260 Z" fill="#f8e06b" stroke="#2d3436" stroke-width="2"/>
-            <!-- 5. 头部（双层+颊斑，小太阳鹦鹉核心写实特征） -->
-            <circle class="parrot-part" id="headMain" cx="200" cy="200" r="60" fill="#fce879" stroke="#2d3436" stroke-width="2"/>
-            <circle class="parrot-part" id="headShadow" cx="190" cy="205" r="55" fill="#f9e062" stroke="none" opacity="0.7"/>
-            <!-- 标志性颊斑（小太阳鹦鹉识别度核心，左右对称） -->
-            <ellipse class="parrot-part" id="cheekPatchLeft" cx="160" cy="200" rx="15" ry="20" fill="#e74c3c" stroke="#2d3436" stroke-width="1"/>
-            <ellipse class="parrot-part" id="cheekPatchRight" cx="240" cy="200" rx="15" ry="20" fill="#e74c3c" stroke="#2d3436" stroke-width="1"/>
-            <!-- 6. 喙部（弯钩形状，还原鹦鹉写实喙，分上下喙） -->
-            <path class="parrot-part" id="beakUpper" d="M200,200 C230,180 250,190 220,210 Z" fill="#f39c12" stroke="#2d3436" stroke-width="1.5"/>
-            <path class="parrot-part" id="beakLower" d="M200,200 C230,210 250,200 220,190 Z" fill="#e67e22" stroke="#2d3436" stroke-width="1.5"/>
-            <!-- 7. 眼睛（写实结构：眼白+瞳孔+高光，更生动） -->
-            <circle class="parrot-part" id="eyeLeftWhite" cx="170" cy="190" r="8" fill="#ffffff" stroke="#2d3436" stroke-width="1"/>
-            <circle class="parrot-part" id="eyeRightWhite" cx="230" cy="190" r="8" fill="#ffffff" stroke="#2d3436" stroke-width="1"/>
-            <circle id="eyeLeftPupil" cx="170" cy="190" r="4" fill="#000000" stroke="none"/>
-            <circle id="eyeRightPupil" cx="230" cy="190" r="4" fill="#000000" stroke="none"/>
-            <circle id="eyeLeftHighlight" cx="168" cy="187" r="2" fill="#ffffff" stroke="none"/>
-            <circle id="eyeRightHighlight" cx="228" cy="187" r="2" fill="#ffffff" stroke="none"/>
-            <!-- 8. 爪部（写实分叉结构，不再是简单直线） -->
-            <path class="parrot-part" id="clawLeft" d="M170,450 L150,480 L145,475 L155,490" stroke="#8c6d31" stroke-width="2" fill="none"/>
-            <path class="parrot-part" id="clawRight" d="M230,450 L250,480 L255,475 L245,490" stroke="#8c6d31" stroke-width="2" fill="none"/>
+        <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
+            <!-- 1. 长尾羽（侧面分层，向后延伸，小太阳鹦鹉标志性长尾） -->
+            <path class="parrot-part" id="tailOuter" d="M150,300 C100,320 80,380 130,400 Z" fill="#e0a800" stroke="#2d3436" stroke-width="1.5"/>
+            <path class="parrot-part" id="tailInner" d="M160,290 C110,300 100,360 140,380 Z" fill="#f1c40f" stroke="#2d3436" stroke-width="1.5"/>
+            <!-- 2. 身体/腹部（侧面流线型，双层叠加模拟光影，更写实） -->
+            <ellipse class="parrot-part" id="bodyMain" cx="250" cy="300" rx="100" ry="60" transform="rotate(-15 250 300)" fill="#f3d44f" stroke="#2d3436" stroke-width="2"/>
+            <ellipse class="parrot-part" id="bodyShadow" cx="240" cy="310" rx="90" ry="55" transform="rotate(-15 240 310)" fill="#e9c947" stroke="none" opacity="0.7"/>
+            <!-- 3. 单侧翅膀（侧面视角仅显示外侧翅膀，分层：初级飞羽+次级飞羽） -->
+            <path class="parrot-part" id="wingPrimary" d="M220,270 C180,240 170,320 220,350 Z" fill="#d4ac00" stroke="#2d3436" stroke-width="1.5"/>
+            <path class="parrot-part" id="wingSecondary" d="M220,270 C200,250 200,300 220,320 Z" fill="#e6b800" stroke="#2d3436" stroke-width="1.5"/>
+            <!-- 4. 颈部（侧面弧度，衔接侧身身体与头部，更自然） -->
+            <path class="parrot-part" id="neck" d="M300,250 C280,260 290,220 320,210 C330,230 310,250 300,250 Z" fill="#f8e06b" stroke="#2d3436" stroke-width="2"/>
+            <!-- 5. 头部（侧面椭圆形+单侧颊斑，小太阳鹦鹉核心侧面特征） -->
+            <ellipse class="parrot-part" id="headMain" cx="350" cy="200" rx="60" ry="50" transform="rotate(-10 350 200)" fill="#fce879" stroke="#2d3436" stroke-width="2"/>
+            <ellipse class="parrot-part" id="headShadow" cx="345" cy="205" rx="55" ry="45" transform="rotate(-10 345 205)" fill="#f9e062" stroke="none" opacity="0.7"/>
+            <!-- 单侧颊斑（侧面视角仅显示一侧，鹦鹉头部左侧（我们看到的右侧）） -->
+            <ellipse class="parrot-part" id="cheekPatch" cx="330" cy="200" rx="12" ry="18" transform="rotate(-10 330 200)" fill="#e74c3c" stroke="#2d3436" stroke-width="1"/>
+            <!-- 6. 侧面弯钩喙（还原鹦鹉侧面喙形，分上下喙，更写实） -->
+            <path class="parrot-part" id="beakUpper" d="M390,200 C420,190 430,210 400,220 Z" fill="#f39c12" stroke="#2d3436" stroke-width="1.5"/>
+            <path class="parrot-part" id="beakLower" d="M390,205 C420,200 430,220 400,225 Z" fill="#e67e22" stroke="#2d3436" stroke-width="1.5"/>
+            <!-- 7. 眼睛（侧面单侧可见，写实结构：眼白+瞳孔+高光） -->
+            <circle class="parrot-part" id="eyeWhite" cx="360" cy="190" r="8" fill="#ffffff" stroke="#2d3436" stroke-width="1"/>
+            <circle id="eyePupil" cx="360" cy="190" r="4" fill="#000000" stroke="none"/>
+            <circle id="eyeHighlight" cx="358" cy="187" r="2" fill="#ffffff" stroke="none"/>
+            <!-- 8. 爪部（侧面分叉结构，贴合侧身身体下方） -->
+            <path class="parrot-part" id="claw" d="M200,350 L180,380 L175,375 L185,390" stroke="#8c6d31" stroke-width="2" fill="none"/>
         </svg>
     </div>
 
     <script>
-        // 1. 配置参数（写实小太阳鹦鹉可变色部件数组，瞳孔/高光保留固定颜色保证辨识度）
+        // 1. 配置参数（左侧面写实小太阳鹦鹉可变色部件数组，瞳孔/高光保留固定颜色保证辨识度）
         const PARROT_PARTS = [
             // 尾羽
-            'tailOuter1', 'tailOuter2', 'tailInner1', 'tailInner2',
+            'tailOuter', 'tailInner',
             // 身体
             'bodyMain', 'bodyShadow',
-            // 翅膀
-            'wingLeftPrimary', 'wingLeftSecondary', 'wingRightPrimary', 'wingRightSecondary',
+            // 单侧翅膀
+            'wingPrimary', 'wingSecondary',
             // 颈部+头部
             'neck', 'headMain', 'headShadow',
             // 颊斑+喙部+爪部
-            'cheekPatchLeft', 'cheekPatchRight', 'beakUpper', 'beakLower', 'clawLeft', 'clawRight',
+            'cheekPatch', 'beakUpper', 'beakLower', 'claw',
             // 眼白
-            'eyeLeftWhite', 'eyeRightWhite'
+            'eyeWhite'
         ];
 
         // 2. 生成随机颜色（贴合小太阳鹦鹉羽毛色系，高饱和度更写实，避免极端颜色）
         function getRandomColor() {
-            // 限制色相范围（30-60：暖黄/橙系，1-20：红橙颊斑系，保证写实感，同时保留随机性）
+            // 限制色相范围（30-60：暖黄/橙系，1-20：红橙颊斑系，保证侧面写实感，同时保留随机性）
             const hueRanges = [
                 [30, 60],  // 主体羽毛：黄/橙黄
                 [1, 20]    // 颊斑：红/橙红
@@ -132,7 +121,7 @@
             return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
 
-        // 3. 生成配套描边色（比填充色深20%，增强写实图案的轮廓层次感）
+        // 3. 生成配套描边色（比填充色深20%，增强侧面图案的轮廓层次感）
         function getStrokeColor(fillColor) {
             const hslMatch = fillColor.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
             if (!hslMatch) return '#2d3436';
@@ -150,11 +139,11 @@
             const strokeColor = getStrokeColor(fillColor);
 
             // 区分部件类型设置颜色（线条部件无fill，仅设置stroke；阴影部件无描边）
-            if (part.tagName === 'PATH' && part.getAttribute('stroke') === 'none') {
+            if (part.tagName === 'ELLIPSE' && part.getAttribute('stroke') === 'none') {
+                part.setAttribute('fill', fillColor);
+            } else if (part.tagName === 'PATH' && part.getAttribute('stroke') === 'none') {
                 part.setAttribute('fill', fillColor);
             } else if (part.tagName === 'PATH' && part.getAttribute('fill') === 'none') {
-                part.setAttribute('stroke', fillColor);
-            } else if (part.tagName === 'LINE' || (part.tagName === 'PATH' && part.getAttribute('fill') === 'none')) {
                 part.setAttribute('stroke', fillColor);
             } else {
                 part.setAttribute('fill', fillColor);
