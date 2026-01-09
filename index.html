@@ -3,27 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>真实感小太阳主页 - 左侧视图</title>
+    <title>真实姿态小太阳主页</title>
     <style>
         :root {
-            /* 基础布局颜色 */
-            --bg-color: #f0f2f5;
-            --branch-color: #6d4c41;
-            --branch-dark: #4e342e;
+            /* === 基础环境色 === */
+            --bg-color: #f4f6f8;
+            --branch-color: #5d4037;
+            --branch-highlight: #795548;
             
-            /* 鹦鹉颜色变量 (由 JS 动态注入) - 初始值 */
-            --head-main: #ffae00; /* 头部主色 */
-            --head-dark: #ff7b00; /* 头部阴影色 */
-            --chest-main: #ffbb00; /* 胸部主色 */
-            --belly-dark: #ff8800; /* 腹部阴影色 */
-            --wing-coverts: #00a86b; /* 肩部覆羽 (最亮) */
-            --wing-secondary: #008f5e; /* 中间飞羽 */
-            --wing-primary: #006b44; /* 长飞羽 (最暗) */
-            --tail-main: #3e2723;
-            --tail-dark: #2c1b18;
-            --cheek-patch: #c62828;
+            /* === 鹦鹉配色变量 (JS 注入) === */
+            /* 头部 */
+            --head-top: #ffae00;
+            --head-bottom: #ff7b00;
+            /* 身体 */
+            --chest-color: #ffca28;
+            --belly-color: #ff6f00;
+            --thigh-color: #ff8f00; /* 大腿毛裤颜色 */
+            /* 翅膀 */
+            --wing-shoulder: #66bb6a;
+            --wing-mid: #43a047;
+            --wing-tip: #1b5e20;
+            /* 尾巴 */
+            --tail-base: #3e2723;
+            --tail-tip: #1a1a1a;
+            /* 其他 */
+            --cheek-color: #d32f2f;
             --beak-color: #37474f;
-            --feet-color: #5d4037;
+            --feet-color: #4e342e;
+            --eye-ring: #ffffff;
         }
 
         body, html {
@@ -35,271 +42,238 @@
             justify-content: center;
             align-items: center;
             background-color: var(--bg-color);
-            font-family: 'Segoe UI', sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
             overflow: hidden;
-            transition: background-color 0.8s ease;
+            transition: background-color 1s ease;
         }
 
         .container {
-            text-align: center;
             position: relative;
             width: 100%;
-            max-width: 650px; /* 稍微加大一点容器 */
-            padding: 20px;
+            max-width: 700px;
+            height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* 鹦鹉的主体 SVG 样式 */
         svg.parrot-art {
             width: 100%;
-            height: auto;
-            max-height: 85vh;
-            /* 更细腻、多层次的投影，营造真实离地感 */
-            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.25)); 
-        }
-
-        h1 {
-            margin-top: -10px;
-            color: #555;
-            font-weight: 400;
-            letter-spacing: 3px;
-            font-size: 1.1rem;
-            opacity: 0.7;
-            text-transform: uppercase;
+            height: 100%;
+            /* 关键：使用多重投影来制造仅仅抓住树枝的悬空感 */
+            filter: drop-shadow(0 25px 25px rgba(0,0,0,0.15));
         }
 
         .fade-in {
-            animation: fadeIn 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+            animation: breathe 3s ease-in-out infinite alternate; /* 给整个鸟一点点呼吸感 */
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px) scale(0.98); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        
+        @keyframes breathe {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-3px); } /* 极其微小的浮动 */
+        }
+        
+        h1 {
+            position: absolute;
+            bottom: 5%;
+            font-size: 14px;
+            color: #999;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 300;
         }
     </style>
 </head>
 <body>
 
-    <div class="container fade-in">
-        <svg class="parrot-art" viewBox="0 0 420 520" xmlns="http://www.w3.org/2000/svg">
+    <div class="container">
+        <svg class="parrot-art fade-in" viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
             <defs>
-                <radialGradient id="gradHeadReal" cx="40%" cy="30%" r="70%">
-                    <stop offset="0%" style="stop-color:var(--head-main)" />
-                    <stop offset="100%" style="stop-color:var(--head-dark)" />
+                <linearGradient id="gradBodyVolume" x1="30%" y1="0%" x2="80%" y2="100%">
+                    <stop offset="0%" style="stop-color:var(--chest-color)" />
+                    <stop offset="60%" style="stop-color:var(--belly-color)" />
+                    <stop offset="100%" style="stop-color:var(--thigh-color)" />
+                </linearGradient>
+
+                <radialGradient id="gradHeadSphere" cx="40%" cy="30%" r="65%">
+                    <stop offset="10%" style="stop-color:var(--head-top)" />
+                    <stop offset="100%" style="stop-color:var(--head-bottom)" />
                 </radialGradient>
 
-                <linearGradient id="gradBodyReal" x1="20%" y1="0%" x2="80%" y2="100%">
-                    <stop offset="10%" style="stop-color:var(--chest-main)" />
-                    <stop offset="90%" style="stop-color:var(--belly-dark)" />
+                <linearGradient id="gradWingShine" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:var(--wing-shoulder)" />
+                    <stop offset="50%" style="stop-color:var(--wing-mid)" />
+                    <stop offset="100%" style="stop-color:var(--wing-tip)" />
                 </linearGradient>
 
-                <linearGradient id="gradWingCoverts" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color:var(--wing-coverts); stop-opacity:1.1" /> <stop offset="100%" style="stop-color:var(--wing-secondary)" />
+                <linearGradient id="gradTailCylinder" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:var(--tail-tip)" />
+                    <stop offset="50%" style="stop-color:var(--tail-base)" />
+                    <stop offset="100%" style="stop-color:var(--tail-tip)" />
                 </linearGradient>
                 
-                <linearGradient id="gradWingPrimary" x1="100%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color:var(--wing-secondary)" />
-                    <stop offset="100%" style="stop-color:var(--wing-primary)" />
-                </linearGradient>
-
-                <linearGradient id="gradTailReal" x1="0%" y1="50%" x2="100%" y2="50%">
-                    <stop offset="0%" style="stop-color:var(--tail-dark)" />
-                    <stop offset="50%" style="stop-color:var(--tail-main)" />
-                    <stop offset="100%" style="stop-color:var(--tail-dark)" />
-                </linearGradient>
-
-                <radialGradient id="gradCheekReal" cx="50%" cy="50%" r="50%">
-                    <stop offset="40%" style="stop-color:var(--cheek-patch);stop-opacity:0.9" />
-                    <stop offset="100%" style="stop-color:var(--cheek-patch);stop-opacity:0" />
-                </radialGradient>
-                
-                <linearGradient id="gradBeak" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#546e7a" />
-                    <stop offset="50%" style="stop-color:var(--beak-color)" />
-                    <stop offset="100%" style="stop-color:#1c2833" />
-                </linearGradient>
-
                 <linearGradient id="gradBranch" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color:var(--branch-color)" />
-                    <stop offset="100%" style="stop-color:var(--branch-dark)" />
+                    <stop offset="0%" style="stop-color:var(--branch-highlight)" />
+                    <stop offset="30%" style="stop-color:var(--branch-color)" />
+                    <stop offset="100%" style="stop-color:#3e2723" />
                 </linearGradient>
             </defs>
 
-            <g transform="translate(420, 0) scale(-1, 1)">
-                
-                <path d="M210,380 Q220,480 235,510 L185,510 Q200,480 200,380 Z" fill="var(--tail-dark)" />
-                <path d="M205,360 Q215,450 210,515 L210,515 Q190,450 195,360 Z" fill="url(#gradTailReal)" />
-                <path d="M210,380 L210,510" stroke="rgba(0,0,0,0.2)" stroke-width="1" fill="none"/>
+            <g transform="translate(500, 0) scale(-1, 1)">
 
-                <path d="M40,400 C150,415 250,385 380,395" stroke="url(#gradBranch)" stroke-width="16" stroke-linecap="round" fill="none" />
-                <path d="M50,402 C150,417 250,387 370,397" stroke="rgba(0,0,0,0.2)" stroke-width="3" fill="none" /> <g fill="var(--feet-color)">
-                    <path d="M175,385 C170,400 175,410 185,412 L188,405 C180,405 178,395 182,385 Z" /> <path d="M188,382 C190,398 198,405 205,402 L202,395 C198,398 194,392 194,382 Z" /> <path d="M185,412 L182,418 L188,415 Z" fill="#333" /> <path d="M205,402 L210,406 L206,398 Z" fill="#333" /> </g>
+                <g transform="rotate(-5 250 400)"> <path d="M230,400 L240,560 Q250,580 260,560 L280,400 Z" fill="var(--tail-tip)" /> <path d="M235,380 L250,550 L265,380 Z" fill="url(#gradTailCylinder)" /> </g>
 
-                <path d="M200,130 C150,130 145,200 155,260 C165,320 180,370 200,380 C230,370 245,320 240,250 C235,180 240,130 200,130 Z" fill="url(#gradBodyReal)" />
+                <path d="M50,420 C150,430 350,410 450,425" stroke="url(#gradBranch)" stroke-width="18" stroke-linecap="round" fill="none" />
                 
-                 <g fill="var(--feet-color)">
-                    <path d="M215,380 C215,395 220,405 230,408 L232,400 C225,400 222,390 222,380 Z" />
-                    <path d="M230,408 L235,414 L234,405 Z" fill="#333"/>
+                <g transform="translate(260, 410)">
+                    <path d="M0,0 Q-5,10 5,15 L10,8 Z" fill="var(--feet-color)" />
+                    <path d="M5,15 L2,20" stroke="#222" stroke-width="2" /> </g>
+
+                <path d="
+                    M 220,160 
+                    Q 170,250 190,380  /* 背部线条：先凹后凸 */
+                    Q 200,430 240,410  /* 臀部/腿部连接处 */
+                    Q 320,400 320,250  /* 腹部到胸部：饱满的弧线 */
+                    Q 310,180 270,160  /* 胸部连到脖子 */
+                    Z" 
+                    fill="url(#gradBodyVolume)" />
+                
+                <path d="M 230,360 Q 210,380 230,410 Q 260,420 270,380 Z" fill="var(--thigh-color)" />
+
+
+                <g transform="translate(230, 415)">
+                    <path d="M0,0 C-10,5 -5,20 10,18 L12,8 Z" fill="var(--feet-color)" />
+                    <path d="M10,18 L15,22" stroke="#222" stroke-width="2" />
+                    <path d="M-5,15 L-8,20" stroke="#222" stroke-width="2" />
                 </g>
 
-                <path d="M180,240 Q240,260 255,360 L220,330 Q215,280 180,240 Z" fill="url(#gradWingPrimary)" />
-                <path d="M230,280 L240,350 M240,270 L250,340" stroke="rgba(0,0,0,0.15)" stroke-width="1.5" fill="none"/>
-                
-                <path d="M170,210 Q230,220 240,310 C220,315 200,290 170,210 Z" fill="var(--wing-secondary)" />
-                <path d="M170,210 Q230,220 240,310" stroke="rgba(255,255,255,0.1)" stroke-width="1" fill="none"/> <path d="M165,190 C190,180 215,190 225,230 C205,250 180,245 165,190 Z" fill="url(#gradWingCoverts)" />
-                <path d="M185,200 Q200,205 210,225" stroke="rgba(255,255,255,0.15)" stroke-width="2" fill="none" stroke-linecap="round"/>
-
-
-                <path d="M200,125 C160,125 150,175 165,210 C180,235 220,235 235,210 C250,175 240,125 200,125 Z" fill="url(#gradHeadReal)" />
-
-                <ellipse cx="228" cy="185" rx="14" ry="10" transform="rotate(-20 228 185)" fill="url(#gradCheekReal)" />
-
-                <g transform="translate(218, 165)">
-                    <circle cx="0" cy="0" r="11" fill="#f0f0f0" stroke="#ddd" stroke-width="0.5" />
-                    <circle cx="0" cy="0" r="7" fill="#3e2723" />
-                    <circle cx="0" cy="0" r="4.5" fill="#000" />
-                    <circle cx="-2.5" cy="-2.5" r="2" fill="#fff" />
+                <g transform="rotate(-5 220 250)">
+                    <path d="M200,280 Q210,350 250,420 L220,350 Z" fill="var(--wing-tip)" />
+                    <path d="M190,200 Q260,200 260,320 Q240,380 200,320 Q180,280 190,200 Z" fill="url(#gradWingShine)" />
+                    <path d="M210,240 Q240,250 240,290" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none" />
+                    <path d="M220,260 Q240,270 240,310" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" fill="none" />
                 </g>
 
-                <g transform="translate(198, 170)">
-                     <path d="M0,0 C-15,5 -20,25 -5,35 C5,28 15,25 20,20 C20,10 10,0 0,0 Z" fill="url(#gradBeak)" />
-                    <path d="M2,2 C-8,8 -12,20 -2,28" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none" stroke-linecap="round"/>
-                    <path d="M5,2 C10,-5 18,-2 20,5 L5,5 Z" fill="#546e7a" opacity="0.6"/>
+                <g transform="translate(20, 10)"> 
+                    <circle cx="245" cy="155" r="58" fill="url(#gradHeadSphere)" />
+                    
+                    <ellipse cx="270" cy="175" rx="15" ry="12" fill="var(--cheek-color)" opacity="0.6" filter="blur(2px)"/>
 
-                    <path d="M0,22 C5,30 15,30 20,22 C15,35 5,35 0,22 Z" fill="#2c3e50" />
+                    <g transform="translate(255, 145)">
+                        <circle cx="0" cy="0" r="10" fill="var(--eye-ring)" stroke="#ddd" stroke-width="1"/>
+                        <circle cx="0" cy="0" r="6" fill="#2d1e18" /> <circle cx="0" cy="0" r="3" fill="#000" /> <circle cx="-2" cy="-2" r="2" fill="#fff" opacity="0.9" /> </g>
+
+                    <g transform="translate(225, 155)">
+                         <path d="M10,0 Q30,-5 35,15 Q25,30 15,10 Z" fill="var(--beak-color)" /> <path d="M15,10 Q25,25 10,20 Z" fill="#263238" /> <path d="M12,2 Q20,5 25,12" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none" /> </g>
                 </g>
 
-            </g> </svg>
-
-        <h1 id="palette-name">Parrot Life</h1>
+            </g>
+        </svg>
+        
+        <h1 id="bird-name">Random Conure</h1>
     </div>
 
     <script>
-        // 随机颜色生成逻辑 (针对新的变量名进行了调整，逻辑更精细)
         document.addEventListener('DOMContentLoaded', () => {
             const root = document.documentElement;
+            const nameEl = document.getElementById('bird-name');
             const hsl = (h, s, l) => `hsl(${h}, ${s}%, ${l}%)`;
             const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-            const randomFloat = (min, max) => Math.random() * (max - min) + min;
 
             const morphs = [
                 {
-                    name: "Sun Conure (金太阳)",
-                    type: "sun",
+                    name: "Sun Conure",
                     generate: () => {
-                        const hueBase = randomInt(35, 48); // 金黄色范围
+                        // 金太阳：非常鲜艳的橙黄
+                        const h = randomInt(35, 45);
                         return {
-                            // 头部：鲜艳金黄 -> 橙红
-                            '--head-main': hsl(hueBase, 100, 60),
-                            '--head-dark': hsl(15, 95, 55), 
-                            // 身体：金黄 -> 深橙
-                            '--chest-main': hsl(hueBase, 100, 52),
-                            '--belly-dark': hsl(25, 100, 48),
-                            // 翅膀：丰富的绿色层次
-                            '--wing-coverts': hsl(randomInt(120, 150), 85, 40), // 肩部较亮
-                            '--wing-secondary': hsl(160, 90, 30),
-                            '--wing-primary': hsl(210, 80, 25), // 翼尖带蓝
-                            // 尾巴：橄榄绿带深色
-                            '--tail-main': hsl(100, 60, 25),
-                            '--tail-dark': hsl(100, 70, 15),
-                            '--cheek-patch': hsl(0, 85, 55), // 鲜红脸颊
-                            '--beak-color': '#263238', // 深灰喙
-                            '--feet-color': '#4e342e',
-                            '--bg-color': hsl(hueBase, 30, 94) // 暖色背景
+                            '--head-top': hsl(h, 100, 60),
+                            '--head-bottom': hsl(15, 100, 55),
+                            '--chest-color': hsl(h, 100, 50),
+                            '--belly-color': hsl(20, 100, 50), // 腹部偏红橙
+                            '--thigh-color': hsl(30, 100, 45),
+                            '--wing-shoulder': hsl(60, 90, 40), // 黄绿肩
+                            '--wing-mid': hsl(140, 80, 35),
+                            '--wing-tip': hsl(220, 70, 30), // 蓝尖
+                            '--cheek-color': hsl(0, 80, 50),
+                            '--bg-color': '#fffdeb'
                         };
                     }
                 },
                 {
-                    name: "Green-Cheeked (绿颊)",
-                    type: "green",
+                    name: "Green-Cheeked Conure",
                     generate: () => {
-                        const hueBody = randomInt(85, 120); // 各种体色绿
-                        const headGray = randomInt(20, 40); // 头部灰度
+                        // 绿颊：头黑，身绿，尾红
+                        const h = randomInt(90, 120);
                         return {
-                            // 头部：灰黑色帽子
-                            '--head-main': hsl(0, 0, headGray + 10),
-                            '--head-dark': hsl(0, 0, headGray),
-                            // 身体：灰绿色 -> 较暗的腹部
-                            '--chest-main': hsl(hueBody, 35, 45),
-                            '--belly-dark': hsl(hueBody, 50, 35),
-                            // 翅膀：深绿色系
-                            '--wing-coverts': hsl(hueBody, 60, 38),
-                            '--wing-secondary': hsl(hueBody + 20, 70, 32), // 略带蓝绿
-                            '--wing-primary': hsl(hueBody + 40, 80, 28), // 翼尖更蓝
-                            // 尾巴：特征性的暗红色
-                            '--tail-main': hsl(355, 65, 30),
-                            '--tail-dark': hsl(350, 75, 20),
-                            '--cheek-patch': hsl(0, 0, 85), // 绿颊通常是灰白脸颊，不是红色
-                            '--beak-color': '#37474f',
-                            '--feet-color': '#5d4037',
-                            '--bg-color': hsl(hueBody, 20, 95) // 冷色背景
+                            '--head-top': '#3e3e3e',
+                            '--head-bottom': '#2d2d2d',
+                            '--chest-color': hsl(h, 30, 50), // 灰绿
+                            '--belly-color': hsl(h, 50, 40),
+                            '--thigh-color': hsl(h, 40, 35),
+                            '--wing-shoulder': hsl(h, 60, 35),
+                            '--wing-mid': hsl(h + 20, 70, 30), // 蓝绿翼
+                            '--wing-tip': hsl(210, 80, 25),
+                            '--tail-base': '#8d1c1c', // 暗红尾
+                            '--tail-tip': '#4a0f0f',
+                            '--cheek-color': '#b0bec5', // 灰白耳羽
+                            '--bg-color': '#eff5f1'
                         };
                     }
                 },
                 {
-                    name: "Blue Mutation (蓝化种)",
-                    type: "blue",
+                    name: "Pineapple Conure",
                     generate: () => {
-                        const hueBase = randomInt(185, 205); // 青蓝色调
+                        // 凤梨：黄脸，红胸，浅背
+                        const h = randomInt(45, 55);
                         return {
-                            // 头部：浅灰蓝
-                            '--head-main': hsl(hueBase, 25, 65),
-                            '--head-dark': hsl(hueBase, 35, 50),
-                            // 身体：柔和的蓝色渐变
-                            '--chest-main': hsl(hueBase, 55, 68),
-                            '--belly-dark': hsl(hueBase, 65, 55),
-                            // 翅膀：多层次蓝色
-                            '--wing-coverts': hsl(hueBase - 10, 50, 50),
-                            '--wing-secondary': hsl(hueBase + 10, 60, 45),
-                            '--wing-primary': hsl(hueBase + 30, 70, 35),
-                            // 尾巴：灰蓝
-                            '--tail-main': hsl(hueBase, 40, 40),
-                            '--tail-dark': hsl(hueBase, 50, 30),
-                            '--cheek-patch': hsl(hueBase, 20, 85), // 非常淡的脸颊
-                            '--beak-color': '#455a64', // 蓝灰喙
-                            '--feet-color': '#616161', // 灰色脚
-                            '--bg-color': hsl(hueBase, 30, 96) // 冷调背景
+                            '--head-top': hsl(h, 90, 70),
+                            '--head-bottom': hsl(h, 80, 60),
+                            '--chest-color': hsl(10, 80, 65), // 柔和红
+                            '--belly-color': hsl(50, 80, 60), // 黄腹
+                            '--thigh-color': hsl(50, 70, 55),
+                            '--wing-shoulder': hsl(h, 60, 55),
+                            '--wing-mid': hsl(h + 20, 50, 50),
+                            '--wing-tip': hsl(h + 40, 50, 40),
+                            '--tail-base': '#bf360c',
+                            '--tail-tip': '#870000',
+                            '--cheek-color': hsl(40, 90, 75), // 黄脸
+                            '--bg-color': '#fff8e1'
                         };
                     }
                 },
                 {
-                     name: "Pineapple (凤梨)",
-                     type: "pineapple",
+                     name: "Turquoise Conure",
                      generate: () => {
-                        // 凤梨是绿颊的变种：黄脸、红胸、浅色背
-                        const hueBody = randomInt(45, 60); // 黄绿色
-                        return {
-                            // 头部：亮黄色/肉桂色
-                            '--head-main': hsl(45, 90, 65),
-                            '--head-dark': hsl(35, 80, 55),
-                            // 身体：胸部红色，腹部黄绿
-                            '--chest-main': hsl(10, 85, 60), // 红胸
-                            '--belly-dark': hsl(hueBody, 70, 50),
-                            // 翅膀：浅肉桂色/黄绿色
-                            '--wing-coverts': hsl(hueBody, 60, 60),
-                            '--wing-secondary': hsl(hueBody + 20, 50, 55),
-                            '--wing-primary': hsl(hueBody + 40, 50, 45),
-                            // 尾巴：亮红色
-                            '--tail-main': hsl(5, 80, 45),
-                            '--tail-dark': hsl(0, 90, 35),
-                            '--cheek-patch': hsl(50, 90, 70), // 黄脸颊
-                            '--beak-color': '#8d6e63', // 浅褐色喙
-                            '--feet-color': '#a1887f', // 浅色脚
-                            '--bg-color': '#fff8e1' // 暖黄背景
-                        };
+                         // 蓝化：整体冷色调
+                         const h = randomInt(180, 200);
+                         return {
+                             '--head-top': hsl(h, 20, 70), // 灰头
+                             '--head-bottom': hsl(h, 25, 60),
+                             '--chest-color': hsl(h, 40, 75), // 浅蓝胸
+                             '--belly-color': hsl(h, 50, 65),
+                             '--thigh-color': hsl(h, 40, 60),
+                             '--wing-shoulder': hsl(h, 50, 50),
+                             '--wing-mid': hsl(h+10, 60, 45),
+                             '--wing-tip': hsl(h+20, 70, 35),
+                             '--tail-base': hsl(h, 30, 40),
+                             '--tail-tip': hsl(h, 40, 30),
+                             '--cheek-color': hsl(h, 10, 85),
+                             '--bg-color': '#e0f7fa'
+                         };
                      }
                 }
             ];
 
-            const selectedMorph = morphs[Math.floor(Math.random() * morphs.length)];
-            console.log("Selected Morph:", selectedMorph.name); // 调试用
+            const selected = morphs[Math.floor(Math.random() * morphs.length)];
+            const colors = selected.generate();
             
-            const colors = selectedMorph.generate();
+            // 更新颜色
             for (const [key, value] of Object.entries(colors)) {
                 root.style.setProperty(key, value);
             }
-            
-             // 更新文字 (可选)
-             // document.getElementById('palette-name').innerText = selectedMorph.name;
+            // 更新名字
+            nameEl.innerText = selected.name;
         });
     </script>
 </body>
