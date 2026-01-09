@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>抽象双尾蝎无人机 - 随机颜色静态主页</title>
+    <title>抽象小太阳鹦鹉 - 刷新换色静态主页</title>
     <style>
         * {
             margin: 0;
@@ -30,33 +30,18 @@
             text-align: center;
         }
 
-        /* 抽象无人机容器（适配响应式） */
-        .drone-container {
+        /* 抽象鹦鹉容器（响应式适配） */
+        .parrot-container {
             width: 100%;
-            max-width: 600px;
+            max-width: 500px;
             height: auto;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        /* SVG元素通用过渡（颜色变化更流畅） */
-        svg .drone-part {
+        /* SVG部件通用过渡（刷新/点击换色更流畅） */
+        svg .parrot-part {
             transition: fill 0.8s ease, stroke 0.8s ease;
-        }
-
-        /* 螺旋桨旋转动画（增加动感，无图片） */
-        @keyframes propellerSpin {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .propeller {
-            transform-origin: center;
-            animation: propellerSpin 2s linear infinite;
         }
 
         /* 响应式适配小屏幕 */
@@ -66,65 +51,65 @@
                 margin-bottom: 25px;
             }
 
-            .drone-container {
-                max-width: 400px;
+            .parrot-container {
+                max-width: 350px;
             }
         }
     </style>
 </head>
 <body>
-    <h1 class="page-title">抽象双尾蝎无人机 - 随机颜色变化</h1>
-    <!-- SVG绘制抽象双尾蝎无人机（核心图案，无图片） -->
-    <!-- 双尾蝎特征：双尾撑、对称机翼、双螺旋桨、流线型机身 -->
-    <div class="drone-container" id="droneContainer">
-        <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
-            <!-- 1. 主机翼（抽象） -->
-            <path class="drone-part" id="wing" d="M100,150 L250,130 L400,150 L250,170 Z" fill="#666" stroke="#333" stroke-width="2"/>
-            <!-- 2. 机身（流线型） -->
-            <rect class="drone-part" id="body" x="230" y="120" width="40" height="60" rx="10" fill="#444" stroke="#333" stroke-width="2"/>
-            <!-- 3. 双尾撑（核心特征：左右对称尾撑） -->
-            <line class="drone-part" id="tailSupportLeft" x1="150" y1="150" x2="100" y2="250" stroke="#555" stroke-width="4"/>
-            <line class="drone-part" id="tailSupportRight" x1="350" y1="150" x2="400" y2="250" stroke="#555" stroke-width="4"/>
-            <!-- 4. 双尾翼（对称设计） -->
-            <polygon class="drone-part" id="tailWingLeft" points="100,250 80,270 120,270" fill="#666" stroke="#333" stroke-width="2"/>
-            <polygon class="drone-part" id="tailWingRight" points="400,250 380,270 420,270" fill="#666" stroke="#333" stroke-width="2"/>
-            <!-- 5. 双螺旋桨（抽象，带旋转动画） -->
-            <circle class="drone-part propeller" id="propellerLeft" cx="100" cy="150" r="15" fill="#777" stroke="#333" stroke-width="2"/>
-            <circle class="drone-part propeller" id="propellerRight" cx="400" cy="150" r="15" fill="#777" stroke="#333" stroke-width="2"/>
-            <line class="drone-part propeller" x1="85" y1="150" x2="115" y2="150" stroke="#333" stroke-width="2"/>
-            <line class="drone-part propeller" x1="100" y1="135" x2="100" y2="165" stroke="#333" stroke-width="2"/>
-            <line class="drone-part propeller" x1="385" y1="150" x2="415" y2="150" stroke="#333" stroke-width="2"/>
-            <line class="drone-part propeller" x1="400" y1="135" x2="400" y2="165" stroke="#333" stroke-width="2"/>
+    <h1 class="page-title">抽象小太阳鹦鹉 - 刷新换色</h1>
+    <!-- SVG绘制抽象小太阳鹦鹉（核心图案，无图片） -->
+    <!-- 小太阳鹦鹉特征：圆润头部、短尖嘴巴、流线型身体、彩色翅膀、长尾羽、小爪子 -->
+    <div class="parrot-container" id="parrotContainer">
+        <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+            <!-- 1. 长尾羽（小太阳鹦鹉标志性特征） -->
+            <path class="parrot-part" id="tail" d="M150,400 C120,480 180,490 200,400 C220,490 280,480 250,400 Z" fill="#e6b800" stroke="#333" stroke-width="2"/>
+            <!-- 2. 身体/腹部 -->
+            <ellipse class="parrot-part" id="body" cx="200" cy="300" rx="80" ry="100" fill="#f0c808" stroke="#333" stroke-width="2"/>
+            <!-- 3. 翅膀（左右对称，抽象化） -->
+            <path class="parrot-part" id="wingLeft" d="M120,250 C80,200 90,300 120,350 Z" fill="#d9a500" stroke="#333" stroke-width="2"/>
+            <path class="parrot-part" id="wingRight" d="M280,250 C320,200 310,300 280,350 Z" fill="#d9a500" stroke="#333" stroke-width="2"/>
+            <!-- 4. 颈部 -->
+            <rect class="parrot-part" id="neck" x="180" y="200" width="40" height="60" rx="20" fill="#f8d42d" stroke="#333" stroke-width="2"/>
+            <!-- 5. 头部 -->
+            <circle class="parrot-part" id="head" cx="200" cy="160" r="50" fill="#fce547" stroke="#333" stroke-width="2"/>
+            <!-- 6. 嘴巴（短尖，小太阳鹦鹉特征） -->
+            <polygon class="parrot-part" id="beak" points="200,160 250,150 200,140" fill="#ff8c00" stroke="#333" stroke-width="2"/>
+            <!-- 7. 眼睛（小黑点，增加辨识度） -->
+            <circle class="parrot-part" id="eyeLeft" cx="180" cy="150" r="5" fill="#000" stroke="#333" stroke-width="1"/>
+            <circle class="parrot-part" id="eyeRight" cx="220" cy="150" r="5" fill="#000" stroke="#333" stroke-width="1"/>
+            <!-- 8. 爪子（简化，左右对称） -->
+            <line class="parrot-part" id="clawLeft" x1="150" y1="400" x2="130" y2="430" stroke="#8b4513" stroke-width="3"/>
+            <line class="parrot-part" id="clawRight" x1="250" y1="400" x2="270" y2="430" stroke="#8b4513" stroke-width="3"/>
         </svg>
     </div>
 
     <script>
-        // 1. 配置参数（可自定义修改）
-        const COLOR_CHANGE_INTERVAL = 3000; // 自动颜色切换间隔（毫秒），3000=3秒
-        const DRONE_PARTS = [
-            'wing', 'body', 'tailSupportLeft', 'tailSupportRight',
-            'tailWingLeft', 'tailWingRight', 'propellerLeft', 'propellerRight'
-        ]; // 无人机所有可变色部件
+        // 1. 配置参数（小太阳鹦鹉可变色部件数组）
+        const PARROT_PARTS = [
+            'tail', 'body', 'wingLeft', 'wingRight',
+            'neck', 'head', 'beak', 'clawLeft', 'clawRight'
+        ]; // 眼睛保留黑色，不参与随机变色，更具辨识度
 
-        // 2. 生成随机颜色（返回柔和的HSL颜色，避免极端颜色，更美观）
+        // 2. 生成随机柔和HSL颜色（避免极端颜色，视觉更美观）
         function getRandomColor() {
-            const hue = Math.floor(Math.random() * 360); // 色相 0-360（全色系）
-            const saturation = 50 + Math.floor(Math.random() * 30); // 饱和度 50-80%（避免过灰）
-            const lightness = 40 + Math.floor(Math.random() * 20); // 亮度 40-60%（避免过亮/过暗）
+            const hue = Math.floor(Math.random() * 360); // 全色系色相（0-360）
+            const saturation = 60 + Math.floor(Math.random() * 25); // 饱和度60-85%（鲜艳不灰暗，符合鹦鹉特征）
+            const lightness = 45 + Math.floor(Math.random() * 20); // 亮度45-65%（避免过亮/过暗）
             return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
 
-        // 3. 生成随机描边颜色（比填充色深10%，增强图案层次感）
+        // 3. 生成配套描边色（比填充色深15%，增强图案层次感）
         function getStrokeColor(fillColor) {
-            // 提取HSL参数并调整亮度
             const hslMatch = fillColor.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
             if (!hslMatch) return '#333';
             const [h, s, l] = hslMatch.slice(1).map(Number);
-            const darkLightness = Math.max(20, l - 10); // 亮度最低不低于20%
+            const darkLightness = Math.max(25, l - 15); // 最低亮度不低于25%，保证描边清晰
             return `hsl(${h}, ${s}%, ${darkLightness}%)`;
         }
 
-        // 4. 更新无人机单个部件颜色
+        // 4. 更新单个鹦鹉部件颜色
         function updatePartColor(partId) {
             const part = document.getElementById(partId);
             if (!part) return;
@@ -132,7 +117,7 @@
             const fillColor = getRandomColor();
             const strokeColor = getStrokeColor(fillColor);
 
-            // 根据部件类型设置颜色（线条部件无fill，只设置stroke）
+            // 区分部件类型设置颜色（线条部件无fill，仅设置stroke）
             if (part.tagName === 'LINE') {
                 part.setAttribute('stroke', fillColor);
             } else {
@@ -141,21 +126,20 @@
             }
         }
 
-        // 5. 批量更新无人机所有部件颜色（随机变色核心逻辑）
-        function updateAllDroneColors() {
-            DRONE_PARTS.forEach(partId => {
+        // 5. 批量更新所有鹦鹉部件颜色（换色核心逻辑）
+        function updateAllParrotColors() {
+            PARROT_PARTS.forEach(partId => {
                 updatePartColor(partId);
             });
         }
 
-        // 6. 绑定点击事件（点击无人机手动切换颜色）
-        document.getElementById('droneContainer').addEventListener('click', updateAllDroneColors);
+        // 6. 可选：保留点击手动换色（如需移除，直接删除此段代码即可）
+        document.getElementById('parrotContainer').addEventListener('click', updateAllParrotColors);
 
-        // 7. 初始化无人机颜色（页面加载时立即生成随机颜色）
-        updateAllDroneColors();
-
-        // 8. 设置定时器（自动循环切换颜色）
-        setInterval(updateAllDroneColors, COLOR_CHANGE_INTERVAL);
+        // 7. 页面加载（刷新）时触发换色（核心：实现仅刷新网页换色）
+        window.onload = function() {
+            updateAllParrotColors();
+        };
     </script>
 </body>
 </html>
