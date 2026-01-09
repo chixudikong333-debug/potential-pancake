@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>随机颜色图案静态主页</title>
+    <title>抽象双尾蝎无人机 - 随机颜色静态主页</title>
     <style>
         * {
             margin: 0;
@@ -13,103 +13,149 @@
 
         body {
             min-height: 100vh;
-            background-color: #f0f0f0;
+            background-color: #f8f9fa;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            font-family: "Arial", sans-serif;
         }
 
-        /* 标题样式 */
+        /* 页面标题样式 */
         .page-title {
-            font-family: "Arial", sans-serif;
             color: #333;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             font-size: 2.2rem;
             text-align: center;
         }
 
-        /* 颜色网格容器 */
-        .color-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-            gap: 8px;
+        /* 抽象无人机容器（适配响应式） */
+        .drone-container {
             width: 100%;
-            max-width: 800px;
+            max-width: 600px;
+            height: auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        /* 网格方块样式 */
-        .color-block {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
-            transition: background-color 0.6s ease;
-            cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        /* SVG元素通用过渡（颜色变化更流畅） */
+        svg .drone-part {
+            transition: fill 0.8s ease, stroke 0.8s ease;
+        }
+
+        /* 螺旋桨旋转动画（增加动感，无图片） */
+        @keyframes propellerSpin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .propeller {
+            transform-origin: center;
+            animation: propellerSpin 2s linear infinite;
         }
 
         /* 响应式适配小屏幕 */
         @media (max-width: 600px) {
-            .color-grid {
-                grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
-            }
-
-            .color-block {
-                width: 40px;
-                height: 40px;
-            }
-
             .page-title {
                 font-size: 1.6rem;
+                margin-bottom: 25px;
+            }
+
+            .drone-container {
+                max-width: 400px;
             }
         }
     </style>
 </head>
 <body>
-    <h1 class="page-title">随机颜色网格图案</h1>
-    <div class="color-grid" id="colorGrid"></div>
+    <h1 class="page-title">抽象双尾蝎无人机 - 随机颜色变化</h1>
+    <!-- SVG绘制抽象双尾蝎无人机（核心图案，无图片） -->
+    <!-- 双尾蝎特征：双尾撑、对称机翼、双螺旋桨、流线型机身 -->
+    <div class="drone-container" id="droneContainer">
+        <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+            <!-- 1. 主机翼（抽象） -->
+            <path class="drone-part" id="wing" d="M100,150 L250,130 L400,150 L250,170 Z" fill="#666" stroke="#333" stroke-width="2"/>
+            <!-- 2. 机身（流线型） -->
+            <rect class="drone-part" id="body" x="230" y="120" width="40" height="60" rx="10" fill="#444" stroke="#333" stroke-width="2"/>
+            <!-- 3. 双尾撑（核心特征：左右对称尾撑） -->
+            <line class="drone-part" id="tailSupportLeft" x1="150" y1="150" x2="100" y2="250" stroke="#555" stroke-width="4"/>
+            <line class="drone-part" id="tailSupportRight" x1="350" y1="150" x2="400" y2="250" stroke="#555" stroke-width="4"/>
+            <!-- 4. 双尾翼（对称设计） -->
+            <polygon class="drone-part" id="tailWingLeft" points="100,250 80,270 120,270" fill="#666" stroke="#333" stroke-width="2"/>
+            <polygon class="drone-part" id="tailWingRight" points="400,250 380,270 420,270" fill="#666" stroke="#333" stroke-width="2"/>
+            <!-- 5. 双螺旋桨（抽象，带旋转动画） -->
+            <circle class="drone-part propeller" id="propellerLeft" cx="100" cy="150" r="15" fill="#777" stroke="#333" stroke-width="2"/>
+            <circle class="drone-part propeller" id="propellerRight" cx="400" cy="150" r="15" fill="#777" stroke="#333" stroke-width="2"/>
+            <line class="drone-part propeller" x1="85" y1="150" x2="115" y2="150" stroke="#333" stroke-width="2"/>
+            <line class="drone-part propeller" x1="100" y1="135" x2="100" y2="165" stroke="#333" stroke-width="2"/>
+            <line class="drone-part propeller" x1="385" y1="150" x2="415" y2="150" stroke="#333" stroke-width="2"/>
+            <line class="drone-part propeller" x1="400" y1="135" x2="400" y2="165" stroke="#333" stroke-width="2"/>
+        </svg>
+    </div>
 
     <script>
         // 1. 配置参数（可自定义修改）
-        const BLOCK_COUNT = 48; // 网格方块总数
-        const CHANGE_INTERVAL = 2000; // 颜色切换间隔（毫秒），2000=2秒
-        const gridContainer = document.getElementById('colorGrid');
+        const COLOR_CHANGE_INTERVAL = 3000; // 自动颜色切换间隔（毫秒），3000=3秒
+        const DRONE_PARTS = [
+            'wing', 'body', 'tailSupportLeft', 'tailSupportRight',
+            'tailWingLeft', 'tailWingRight', 'propellerLeft', 'propellerRight'
+        ]; // 无人机所有可变色部件
 
-        // 2. 生成随机颜色（返回RGB格式颜色值）
+        // 2. 生成随机颜色（返回柔和的HSL颜色，避免极端颜色，更美观）
         function getRandomColor() {
-            const r = Math.floor(Math.random() * 256); // 红通道 0-255
-            const g = Math.floor(Math.random() * 256); // 绿通道 0-255
-            const b = Math.floor(Math.random() * 256); // 蓝通道 0-255
-            return `rgb(${r}, ${g}, ${b})`;
+            const hue = Math.floor(Math.random() * 360); // 色相 0-360（全色系）
+            const saturation = 50 + Math.floor(Math.random() * 30); // 饱和度 50-80%（避免过灰）
+            const lightness = 40 + Math.floor(Math.random() * 20); // 亮度 40-60%（避免过亮/过暗）
+            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
 
-        // 3. 初始化网格方块
-        function initColorGrid() {
-            for (let i = 0; i < BLOCK_COUNT; i++) {
-                const block = document.createElement('div');
-                block.className = 'color-block';
-                block.style.backgroundColor = getRandomColor(); // 初始随机颜色
-                // 点击方块单独切换颜色
-                block.addEventListener('click', () => {
-                    block.style.backgroundColor = getRandomColor();
-                });
-                gridContainer.appendChild(block);
+        // 3. 生成随机描边颜色（比填充色深10%，增强图案层次感）
+        function getStrokeColor(fillColor) {
+            // 提取HSL参数并调整亮度
+            const hslMatch = fillColor.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
+            if (!hslMatch) return '#333';
+            const [h, s, l] = hslMatch.slice(1).map(Number);
+            const darkLightness = Math.max(20, l - 10); // 亮度最低不低于20%
+            return `hsl(${h}, ${s}%, ${darkLightness}%)`;
+        }
+
+        // 4. 更新无人机单个部件颜色
+        function updatePartColor(partId) {
+            const part = document.getElementById(partId);
+            if (!part) return;
+
+            const fillColor = getRandomColor();
+            const strokeColor = getStrokeColor(fillColor);
+
+            // 根据部件类型设置颜色（线条部件无fill，只设置stroke）
+            if (part.tagName === 'LINE') {
+                part.setAttribute('stroke', fillColor);
+            } else {
+                part.setAttribute('fill', fillColor);
+                part.setAttribute('stroke', strokeColor);
             }
         }
 
-        // 4. 全局批量更新方块颜色
-        function updateAllBlockColors() {
-            const allBlocks = document.querySelectorAll('.color-block');
-            allBlocks.forEach(block => {
-                block.style.backgroundColor = getRandomColor();
+        // 5. 批量更新无人机所有部件颜色（随机变色核心逻辑）
+        function updateAllDroneColors() {
+            DRONE_PARTS.forEach(partId => {
+                updatePartColor(partId);
             });
         }
 
-        // 5. 执行初始化和自动更新
-        initColorGrid();
-        // 设置定时器，定期批量切换颜色
-        setInterval(updateAllBlockColors, CHANGE_INTERVAL);
+        // 6. 绑定点击事件（点击无人机手动切换颜色）
+        document.getElementById('droneContainer').addEventListener('click', updateAllDroneColors);
+
+        // 7. 初始化无人机颜色（页面加载时立即生成随机颜色）
+        updateAllDroneColors();
+
+        // 8. 设置定时器（自动循环切换颜色）
+        setInterval(updateAllDroneColors, COLOR_CHANGE_INTERVAL);
     </script>
 </body>
 </html>
