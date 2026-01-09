@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>极简 Typecho 静态博客</title>
-    <!-- 引入 Tailwind CSS CDN（极简配置，无多余依赖） -->
+    <title>极简 Typora 风格笔记 | 专注文本内容</title>
+    <!-- 引入 Tailwind CSS CDN（极简配置，保证加载速度） -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入极简 Font Awesome 图标（仅保留核心博客图标） -->
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- Tailwind 极简配置（贴合Typecho极简洁风格，少色彩、高可读性） -->
+    <!-- Tailwind 自定义配置（贴合Typora经典极简风格，无多余色彩） -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#4682B4', // Typecho 极简经典钢蓝（低饱和度，更素雅）
-                        dark: '#2C3E50',
-                        gray-light: '#F5F7FA',
-                        gray-text: '#666666',
+                        typo: {
+                            dark: '#24292e', // Typora 经典正文色
+                            light: '#fafafa', // Typora 白底背景
+                            gray: '#6a737d', // 辅助文本色（日期/分类）
+                            accent: '#0366d6', // 轻微强调色（链接/标题Hover，低饱和度不抢眼）
+                        },
                     },
                     fontFamily: {
-                        sans: ['Helvetica', 'Arial', 'sans-serif'], // 极简无衬线字体，保证加载速度
+                        typo: ['Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'], // Typora 默认无衬线字体，保证可读性
                     },
                 }
             }
@@ -28,150 +28,133 @@
     </script>
     <style type="text/tailwindcss">
         @layer utilities {
-            /* 极简工具类，仅保留必要重复样式 */
-            .blog-card {
-                @apply bg-white p-5 mb-4 border border-gray-100 hover:border-gray-200 transition-colors duration-200;
+            /* 极简工具类，贴合Typora文本渲染风格 */
+            .typo-paragraph {
+                @apply my-4 text-typo-dark leading-relaxed;
             }
-            .sidebar-widget {
-                @apply bg-white p-4 mb-4 border border-gray-100;
+            .typo-card {
+                @apply bg-white py-6 px-0 mb-8 border-b border-gray-100; /* 无阴影，仅轻微边框分隔，贴合Typora */
             }
-            .nav-link {
-                @apply px-2 py-1 text-dark hover:text-primary transition-colors duration-200 text-sm;
+            .typo-nav-link {
+                @apply px-3 py-2 text-typo-dark hover:text-typo-accent transition-colors duration-200 text-sm;
             }
         }
     </style>
 </head>
-<!-- 极简背景，高对比度文字，保证可读性 -->
-<body class="bg-gray-light font-sans text-dark">
-    <!-- 顶部极简导航（无多余阴影，紧凑布局） -->
-    <header class="bg-white border-b border-gray-100 sticky top-0 z-10">
+<!-- Typora 经典白底背景，专注文本展示 -->
+<body class="bg-typo-light font-typo text-typo-dark antialiased">
+    <!-- 顶部极简导航（Typora 风格，无多余装饰，紧凑布局） -->
+    <header class="bg-white sticky top-0 z-10 border-b border-gray-100">
         <div class="container mx-auto px-4 py-3 flex flex-col sm:flex-row justify-between items-center">
-            <!-- 极简博客标题（无多余装饰，突出文字） -->
+            <!-- 极简标题（贴合Typora 无花哨样式，突出文本） -->
             <div class="mb-2 sm:mb-0">
-                <h1 class="text-xl font-bold text-primary">
-                    <a href="#">极简 Typecho 博客</a>
+                <h1 class="text-xl font-bold text-typo-dark">
+                    <a href="#">Typora 极简笔记</a>
                 </h1>
             </div>
-            <!-- 紧凑导航菜单（无多余图标，极简文字链接） -->
+            <!-- 紧凑导航（Typora 风格，无图标，仅纯文本链接） -->
             <nav class="flex flex-wrap justify-center gap-1 sm:gap-0">
-                <a href="#" class="nav-link">首页</a>
-                <a href="#" class="nav-link">归档</a>
-                <a href="#" class="nav-link">分类</a>
-                <a href="#" class="nav-link">关于</a>
+                <a href="#" class="typo-nav-link">首页</a>
+                <a href="#" class="typo-nav-link">归档</a>
+                <a href="#" class="typo-nav-link">分类</a>
+                <a href="#" class="typo-nav-link">关于</a>
             </nav>
         </div>
     </header>
 
-    <!-- 主内容区（极简分栏，无多余间距，突出内容） -->
-    <main class="container mx-auto px-4 py-6 flex flex-col lg:flex-row gap-6">
-        <!-- 左侧文章列表（核心内容，无多余装饰） -->
-        <div class="lg:w-2/3">
-            <!-- 文章卡片 1（极简结构，仅保留标题、信息、摘要） -->
-            <article class="blog-card">
-                <div class="mb-2">
-                    <h2 class="text-lg font-bold mb-1">
-                        <a href="#" class="text-dark hover:text-primary transition-colors">Typecho 极简搭建指南</a>
-                    </h2>
-                    <div class="text-gray-text text-xs flex items-center">
-                        <span>2025-12-01</span>
-                        <span class="mx-2">|</span>
-                        <span>技术教程</span>
-                    </div>
-                </div>
-                <div class="mb-2">
-                    <p class="text-gray-text text-sm leading-relaxed">
-                        Typecho 以轻量简洁著称，无需复杂配置，即可快速搭建个人博客。本文梳理极简搭建流程，剥离冗余步骤，专注核心功能实现。
-                    </p>
-                </div>
-                <div>
-                    <a href="#" class="text-primary text-xs hover:underline">阅读更多</a>
-                </div>
-            </article>
-
-            <!-- 文章卡片 2（与卡片1统一风格，保持极简一致性） -->
-            <article class="blog-card">
-                <div class="mb-2">
-                    <h2 class="text-lg font-bold mb-1">
-                        <a href="#" class="text-dark hover:text-primary transition-colors">极简 Typecho 主题推荐</a>
-                    </h2>
-                    <div class="text-gray-text text-xs flex items-center">
-                        <span>2025-11-15</span>
-                        <span class="mx-2">|</span>
-                        <span>主题分享</span>
-                    </div>
-                </div>
-                <div class="mb-2">
-                    <p class="text-gray-text text-sm leading-relaxed">
-                        精选多款极简洁 Typecho 主题，无多余动画、无复杂布局，专注内容展示，适配静态化部署到 GitHub Pages。
-                    </p>
-                </div>
-                <div>
-                    <a href="#" class="text-primary text-xs hover:underline">阅读更多</a>
-                </div>
-            </article>
-
-            <!-- 文章卡片 3（保持极简风格，统一视觉） -->
-            <article class="blog-card">
-                <div class="mb-2">
-                    <h2 class="text-lg font-bold mb-1">
-                        <a href="#" class="text-dark hover:text-primary transition-colors">GitHub Pages 静态部署技巧</a>
-                    </h2>
-                    <div class="text-gray-text text-xs flex items-center">
-                        <span>2025-10-20</span>
-                        <span class="mx-2">|</span>
-                        <span>部署教程</span>
-                    </div>
-                </div>
-                <div class="mb-2">
-                    <p class="text-gray-text text-sm leading-relaxed">
-                        无需服务器，将 Typecho 静态化博客部署到 GitHub Pages，实现免费在线访问，本文梳理极简部署步骤，避免踩坑。
-                    </p>
-                </div>
-                <div>
-                    <a href="#" class="text-primary text-xs hover:underline">阅读更多</a>
-                </div>
-            </article>
-
-            <!-- 极简分页（无多余样式，紧凑实用） -->
-            <div class="flex justify-center mt-6 text-sm">
-                <nav class="flex gap-2">
-                    <a href="#" class="px-3 py-1 border border-gray-100 hover:border-primary hover:text-primary">上一页</a>
-                    <a href="#" class="px-3 py-1 bg-primary text-white">1</a>
-                    <a href="#" class="px-3 py-1 border border-gray-100 hover:border-primary hover:text-primary">2</a>
-                    <a href="#" class="px-3 py-1 border border-gray-100 hover:border-primary hover:text-primary">下一页</a>
-                </nav>
-            </div>
-        </div>
-
-        <!-- 右侧极简侧边栏（仅保留核心功能，剥离冗余元素） -->
-        <div class="lg:w-1/3">
-            <!-- 极简搜索框 -->
-            <div class="sidebar-widget">
-                <div class="flex">
-                    <input type="text" placeholder="搜索..." class="flex-1 px-2 py-1 border border-gray-100 text-xs focus:outline-none focus:border-primary">
-                    <button class="px-2 py-1 bg-primary text-white text-xs">
-                        <i class="fa fa-search"></i>
-                    </button>
+    <!-- 主内容区（Typora 核心文本展示区，居中布局，无多余分栏装饰） -->
+    <main class="container mx-auto px-4 py-8 max-w-3xl">
+        <!-- 文章卡片 1（Typora 渲染风格，标题层级分明，段落清晰） -->
+        <article class="typo-card">
+            <div class="mb-3">
+                <h2 class="text-xl font-bold mb-2 hover:text-typo-accent transition-colors">
+                    <a href="#">Markdown 语法入门（Typora 适配版）</a>
+                </h2>
+                <div class="text-typo-gray text-xs flex items-center">
+                    <span>2025-12-05</span>
+                    <span class="mx-2">|</span>
+                    <span>Markdown 教程</span>
                 </div>
             </div>
-
-            <!-- 极简分类列表 -->
-            <div class="sidebar-widget">
-                <h3 class="text-sm font-bold mb-2 border-b border-gray-100 pb-1">文章分类</h3>
-                <ul class="text-xs text-gray-text space-y-1">
-                    <li><a href="#" class="hover:text-primary transition-colors">技术教程 (8)</a></li>
-                    <li><a href="#" class="hover:text-primary transition-colors">主题分享 (5)</a></li>
-                    <li><a href="#" class="hover:text-primary transition-colors">部署技巧 (3)</a></li>
-                    <li><a href="#" class="hover:text-primary transition-colors">杂谈 (6)</a></li>
-                </ul>
+            <div class="mb-3">
+                <!-- Typora 风格段落展示 -->
+                <p class="typo-paragraph">
+                    Typora 是一款所见即所得的 Markdown 编辑器，完美支持所有标准 Markdown 语法，同时提供实时渲染效果，让编辑体验更接近普通文本编辑器。
+                </p>
+                <p class="typo-paragraph">
+                    本文将梳理核心 Markdown 语法，包括标题、列表、链接、图片、代码块等，所有示例均适配 Typora 渲染风格，可直接复制到 Typora 中使用。
+                </p>
             </div>
+            <div>
+                <a href="#" class="text-typo-accent text-sm hover:underline">阅读更多 →</a>
+            </div>
+        </article>
+
+        <!-- 文章卡片 2（保持 Typora 风格一致性，无冗余装饰） -->
+        <article class="typo-card">
+            <div class="mb-3">
+                <h2 class="text-xl font-bold mb-2 hover:text-typo-accent transition-colors">
+                    <a href="#">Typora 极简设置技巧</a>
+                </h2>
+                <div class="text-typo-gray text-xs flex items-center">
+                    <span>2025-11-20</span>
+                    <span class="mx-2">|</span>
+                    <span>Typora 教程</span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <p class="typo-paragraph">
+                    Typora 的强大之处在于其极简的界面和高度可定制的设置，通过少量配置即可打造符合个人使用习惯的编辑环境，同时不破坏其核心的文本专注感。
+                </p>
+                <p class="typo-paragraph">
+                    本文将分享几款实用的极简设置，包括默认字体修改、行间距调整、导出格式优化等，帮助你在保持 Typora 简洁风格的同时，提升使用效率。
+                </p>
+            </div>
+            <div>
+                <a href="#" class="text-typo-accent text-sm hover:underline">阅读更多 →</a>
+            </div>
+        </article>
+
+        <!-- 文章卡片 3（延续 Typora 文本优先风格） -->
+        <article class="typo-card">
+            <div class="mb-3">
+                <h2 class="text-xl font-bold mb-2 hover:text-typo-accent transition-colors">
+                    <a href="#">将 Typora 笔记静态化托管到 GitHub Pages</a>
+                </h2>
+                <div class="text-typo-gray text-xs flex items-center">
+                    <span>2025-10-28</span>
+                    <span class="mx-2">|</span>
+                    <span>部署教程</span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <p class="typo-paragraph">
+                    很多人习惯用 Typora 记录笔记，但如何将笔记在线分享且保持原有风格？通过静态化处理，可将 Typora 笔记转换为纯静态网页，托管到 GitHub Pages 实现免费在线访问。
+                </p>
+                <p class="typo-paragraph">
+                    本文将详细介绍转换流程和托管步骤，全程保持极简风格，无需复杂工具，新手也能快速上手，最终实现笔记的在线展示和永久保存。
+                </p>
+            </div>
+            <div>
+                <a href="#" class="text-typo-accent text-sm hover:underline">阅读更多 →</a>
+            </div>
+        </article>
+
+        <!-- 极简分页（Typora 风格，无花哨样式，紧凑实用） -->
+        <div class="flex justify-center mt-8 text-sm">
+            <nav class="flex gap-2">
+                <a href="#" class="px-3 py-1 border border-gray-100 hover:border-typo-accent hover:text-typo-accent">上一页</a>
+                <a href="#" class="px-3 py-1 bg-typo-accent text-white">1</a>
+                <a href="#" class="px-3 py-1 border border-gray-100 hover:border-typo-accent hover:text-typo-accent">2</a>
+                <a href="#" class="px-3 py-1 border border-gray-100 hover:border-typo-accent hover:text-typo-accent">下一页</a>
+            </nav>
         </div>
     </main>
 
-    <!-- 极简底部（仅保留版权信息，无多余内容） -->
-    <footer class="bg-white border-t border-gray-100 py-4 mt-6">
-        <div class="container mx-auto px-4 text-center text-xs text-gray-text">
-            <p>© 2025 极简 Typecho 博客 | 托管于 GitHub Pages</p>
+    <!-- 极简底部（Typora 风格，仅保留核心版权信息，无多余内容） -->
+    <footer class="bg-white border-t border-gray-100 py-4 mt-8">
+        <div class="container mx-auto px-4 text-center text-xs text-typo-gray">
+            <p>© 2025 Typora 极简笔记 | 托管于 GitHub Pages</p>
         </div>
     </footer>
 </body>
