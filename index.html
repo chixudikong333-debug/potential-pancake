@@ -3,167 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小太阳鹦鹉 - 主页</title>
+    <title>我的小太阳主页</title>
     <style>
-        * {
+        :root {
+            /* 基础布局颜色 */
+            --bg-color: #f0f2f5;
+            --branch-color: #5d4037;
+            
+            /* 鹦鹉颜色变量 (由 JS 动态注入) */
+            --head-color-stop1: #ffae00;
+            --head-color-stop2: #ff7b00;
+            --body-color-stop1: #ffbb00;
+            --body-color-stop2: #ff8800;
+            --wing-primary: #00a86b;
+            --wing-secondary: #006b44;
+            --tail-color: #3e2723;
+            --cheek-patch: #c62828;
+            --beak-color: #2c3e50;
+        }
+
+        body, html {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            min-height: 100vh;
-            background-color: #f5f7fa;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            font-family: "Arial", sans-serif;
-        }
-
-        /* 页面标题样式 */
-        。page-title {
-            color: #2d3436;
-            margin-bottom: 40px;
-            font-size: 2.2rem;
-            text-align: center;
-        }
-
-        /* 侧面鹦鹉容器（响应式适配，保持侧面比例） */
-        。parrot-container {
             width: 100%;
-            max-width: 550px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        /* 鹦鹉的主体 SVG 样式 */
+        svg.parrot-art {
+            width: 80%; /* 响应式大小 */
             height: auto;
-            transition: all 0.3s ease;
+            max-height: 80vh;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15)); /* 增加立体投影 */
         }
 
-        /* SVG部件通用过渡（刷新换色更流畅，无生硬跳转） */
-        svg .parrot-part {
-            transition: fill 0.8s ease, stroke 0.8s ease;
+        /* 文字样式 (可选) */
+        h1 {
+            margin-top: -20px;
+            color: #444;
+            font-weight: 300;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+            opacity: 0.8;
         }
 
-        /* 响应式适配小屏幕，避免图案变形 */
-        @media (max-width: 600px) {
-            .page-title {
-                font-size: 1.6rem;
-                margin-bottom: 25px;
-            }
+        /* 简单的淡入动画 */
+        .fade-in {
+            animation: fadeIn 1.5s ease-out;
+        }
 
-            .parrot-container {
-                max-width: 400px;
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-    <h1 class="page-title">左侧面写实小太阳鹦鹉 - 刷新换色</h1>
-    <!-- SVG绘制左侧面写实小太阳鹦鹉（核心：侧面布局+单侧细节，无图片） -->
-    <!-- 侧面特征：头往左（鹦鹉左侧面）、单侧颊斑、侧面弯钩喙、单侧翅膀、侧身流线型身体、长尾向后延伸 -->
-    <div class="parrot-container" id="parrotContainer">
-        <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-            <!-- 1. 长尾羽（侧面分层，向后延伸，小太阳鹦鹉标志性长尾） -->
-            <path class="parrot-part" id="tailOuter" d="M150,300 C100,320 80,380 130,400 Z" fill="#e0a800" stroke="#2d3436" stroke-width="1.5"/>
-            <path class="parrot-part" id="tailInner" d="M160,290 C110,300 100,360 140,380 Z" fill="#f1c40f" stroke="#2d3436" stroke-width="1.5"/>
-            <!-- 2. 身体/腹部（侧面流线型，双层叠加模拟光影，更写实） -->
-            <ellipse class="parrot-part" id="bodyMain" cx="250" cy="300" rx="100" ry="60" transform="rotate(-15 250 300)" fill="#f3d44f" stroke="#2d3436" stroke-width="2"/>
-            <ellipse class="parrot-part" id="bodyShadow" cx="240" cy="310" rx="90" ry="55" transform="rotate(-15 240 310)" fill="#e9c947" stroke="none" opacity="0.7"/>
-            <!-- 3. 单侧翅膀（侧面视角仅显示外侧翅膀，分层：初级飞羽+次级飞羽） -->
-            <path class="parrot-part" id="wingPrimary" d="M220,270 C180,240 170,320 220,350 Z" fill="#d4ac00" stroke="#2d3436" stroke-width="1.5"/>
-            <path class="parrot-part" id="wingSecondary" d="M220,270 C200,250 200,300 220,320 Z" fill="#e6b800" stroke="#2d3436" stroke-width="1.5"/>
-            <!-- 4. 颈部（侧面弧度，衔接侧身身体与头部，更自然） -->
-            <path class="parrot-part" id="neck" d="M300,250 C280,260 290,220 320,210 C330,230 310,250 300,250 Z" fill="#f8e06b" stroke="#2d3436" stroke-width="2"/>
-            <!-- 5. 头部（侧面椭圆形+单侧颊斑，小太阳鹦鹉核心侧面特征） -->
-            <ellipse class="parrot-part" id="headMain" cx="350" cy="200" rx="60" ry="50" transform="rotate(-10 350 200)" fill="#fce879" stroke="#2d3436" stroke-width="2"/>
-            <ellipse class="parrot-part" id="headShadow" cx="345" cy="205" rx="55" ry="45" transform="rotate(-10 345 205)" fill="#f9e062" stroke="none" opacity="0.7"/>
-            <!-- 单侧颊斑（侧面视角仅显示一侧，鹦鹉头部左侧（我们看到的右侧）） -->
-            <ellipse class="parrot-part" id="cheekPatch" cx="330" cy="200" rx="12" ry="18" transform="rotate(-10 330 200)" fill="#e74c3c" stroke="#2d3436" stroke-width="1"/>
-            <!-- 6. 侧面弯钩喙（还原鹦鹉侧面喙形，分上下喙，更写实） -->
-            <path class="parrot-part" id="beakUpper" d="M390,200 C420,190 430,210 400,220 Z" fill="#f39c12" stroke="#2d3436" stroke-width="1.5"/>
-            <path class="parrot-part" id="beakLower" d="M390,205 C420,200 430,220 400,225 Z" fill="#e67e22" stroke="#2d3436" stroke-width="1.5"/>
-            <!-- 7. 眼睛（侧面单侧可见，写实结构：眼白+瞳孔+高光） -->
-            <circle class="parrot-part" id="eyeWhite" cx="360" cy="190" r="8" fill="#ffffff" stroke="#2d3436" stroke-width="1"/>
-            <circle id="eyePupil" cx="360" cy="190" r="4" fill="#000000" stroke="none"/>
-            <circle id="eyeHighlight" cx="358" cy="187" r="2" fill="#ffffff" stroke="none"/>
-            <!-- 8. 爪部（侧面分叉结构，贴合侧身身体下方） -->
-            <path class="parrot-part" id="claw" d="M200,350 L180,380 L175,375 L185,390" stroke="#8c6d31" stroke-width="2" fill="none"/>
-        </svg>
+
+    <div class="container fade-in">
+        <svg class="parrot-art" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="gradHead" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:var(--head-color-stop1);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:var(--head-color-stop2);stop-opacity:1" />
+                </linearGradient>
+
+                <linearGradient id="gradBody" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:var(--body-color-stop1);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:var(--body-color-stop2);stop-opacity:1" />
+                </linearGradient>
+
+                <linearGradient id="gradWing" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:var(--wing-primary);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:var(--wing-secondary);stop-opacity:1" />
+                </linearGradient>
+
+                <radialGradient id="gradCheek" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                    <stop offset="0%" style="stop-color:var(--cheek-patch);stop-opacity:0.8" />
+                    <stop offset="100%" style="stop-color:var(--cheek-patch);stop-opacity:0" />
+                </radialGradient>
+            </defs>
+
+            <path d="M220,350 Q230,450 200,490 Q180,450 190,350 Z" fill="var(--tail-color)" />
+
+            <ellipse cx="200" cy="260" rx="60" ry="110" fill="url(#gradBody)" transform="rotate(-10 200 260)" />
+
+            <path d="M180,360 L180,375 M185,360 L185,375" stroke="#333" stroke-width="4" stroke-linecap="round" />
+            
+            <path d="M50,370 Q200,380 350,360" stroke="var(--branch-color)" stroke-width="12" stroke-linecap="round" fill="none" />
+
+            <path d="M215,355 L215,370 M220,355 L220,370" stroke="#333" stroke-width="4" stroke-linecap="round" />
+
+            <circle cx="200" cy="160" r="55" fill="url(#gradHead)" />
+
+            <circle cx="225" cy="175" r="12" fill="url(#gradCheek)" />
+
+            <path d="M190,200 Q260,200 260,280 Q250,340 190,320 Z" fill="url(#gradWing)" />
+            <path d="M200,220 Q240,220 240,260" stroke="rgba(255,255,255,0.2)" stroke-width="2" fill="none" />
+            <path d="M210,240 Q240,240 240,280" stroke="rgba(255,255,255,0.2)" stroke-width="2" fill="none" />
+
+            <circle cx="215" cy="150" r="10" fill="#fff" stroke="#ccc" stroke-width="1" />
+            <circle cx="215" cy="150" r="5" fill="#000" />
+            <circle cx="217" cy="148" r="1.5" fill="#fff" />
+
+            <path d="M195,155 Q190,180 200,185 L205,175 Z" fill="#1a1a1a" /> <path d="M195,155 Q230,155 230,175 Q200,185 195,155 Z" fill="var(--beak-color)" /> </svg>
+
+        <h1 id="palette-name">Parrot Life</h1>
     </div>
 
     <script>
-        // 1. 配置参数（左侧面写实小太阳鹦鹉可变色部件数组，瞳孔/高光保留固定颜色保证辨识度）
-        const PARROT_PARTS = [
-            // 尾羽
-            'tailOuter', 'tailInner',
-            // 身体
-            'bodyMain', 'bodyShadow',
-            // 单侧翅膀
-            'wingPrimary', 'wingSecondary',
-            // 颈部+头部
-            'neck', 'headMain', 'headShadow',
-            // 颊斑+喙部+爪部
-            'cheekPatch', 'beakUpper', 'beakLower', 'claw',
-            // 眼白
-            'eyeWhite'
-        ];
+        // 随机颜色生成逻辑
+        document.addEventListener('DOMContentLoaded', () => {
+            const root = document.documentElement;
+            const nameElement = document.getElementById('palette-name');
 
-        // 2. 生成随机颜色（贴合小太阳鹦鹉羽毛色系，高饱和度更写实，避免极端颜色）
-        function getRandomColor() {
-            // 限制色相范围（30-60：暖黄/橙系，1-20：红橙颊斑系，保证侧面写实感，同时保留随机性）
-            const hueRanges = [
-                [30, 60],  // 主体羽毛：黄/橙黄
-                [1, 20]    // 颊斑：红/橙红
-            ];
-            const selectedRange = hueRanges[Math.floor(Math.random() * hueRanges.length)];
-            const hue = Math.floor(Math.random() * (selectedRange[1] - selectedRange[0] + 1)) + selectedRange[0];
-            const saturation = 65 + Math.floor(Math.random() * 20); // 饱和度65-85%，鲜艳贴合鹦鹉羽毛
-            const lightness = 40 + Math.floor(Math.random() * 25); // 亮度40-65%，避免过亮/过暗
-            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-        }
+            // 辅助函数：生成 HSL 颜色
+            const hsl = (h, s, l) => `hsl(${h}, ${s}%, ${l}%)`;
+            const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-        // 3. 生成配套描边色（比填充色深20%，增强侧面图案的轮廓层次感）
-        function getStrokeColor(fillColor) {
-            const hslMatch = fillColor.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
-            if (!hslMatch) return '#2d3436';
-            const [h, s, l] = hslMatch.slice(1).map(Number);
-            const darkLightness = Math.max(20, l - 20); // 最低亮度不低于20%，保证描边清晰可见
-            return `hsl(${h}, ${s}%, ${darkLightness}%)`;
-        }
-
-        // 4. 更新单个鹦鹉部件颜色
-        function updatePartColor(partId) {
-            const part = document.getElementById(partId);
-            if (!part) return;
-
-            const fillColor = getRandomColor();
-            const strokeColor = getStrokeColor(fillColor);
-
-            // 区分部件类型设置颜色（线条部件无fill，仅设置stroke；阴影部件无描边）
-            if (part.tagName === 'ELLIPSE' && part.getAttribute('stroke') === 'none') {
-                part.setAttribute('fill', fillColor);
-            } else if (part.tagName === 'PATH' && part.getAttribute('stroke') === 'none') {
-                part.setAttribute('fill', fillColor);
-            } else if (part.tagName === 'PATH' && part.getAttribute('fill') === 'none') {
-                part.setAttribute('stroke', fillColor);
-            } else {
-                part.setAttribute('fill', fillColor);
-                if (part.getAttribute('stroke') !== 'none') {
-                    part.setAttribute('stroke', strokeColor);
+            // 定义三种“真实”的鹦鹉色系模板
+            const morphs = [
+                {
+                    name: "Sun Conure (金太阳)",
+                    type: "sun",
+                    // 金太阳：整体金黄，翅膀带绿，脸颊红
+                    baseHue: 45, // 黄色基调
+                    generate: () => {
+                        const hue = randomInt(40, 50);
+                        return {
+                            '--head-color-stop1': hsl(hue, 100, 60),
+                            '--head-color-stop2': hsl(15, 90, 60), // 头部渐变到橙红色
+                            '--body-color-stop1': hsl(hue, 100, 50),
+                            '--body-color-stop2': hsl(25, 100, 50), // 腹部橙色
+                            '--wing-primary': hsl(140, 80, 35), // 绿色翅膀
+                            '--wing-secondary': hsl(210, 70, 30), // 翅膀尖端带蓝
+                            '--tail-color': hsl(100, 50, 20),
+                            '--cheek-patch': hsl(0, 80, 50),
+                            '--bg-color': '#fffbe6'
+                        };
+                    }
+                },
+                {
+                    name: "Green-Cheeked (绿颊)",
+                    type: "green",
+                    // 绿颊：身体绿，头部灰/黑，尾巴红
+                    baseHue: 100,
+                    generate: () => {
+                        const hue = randomInt(90, 130); // 各种绿色
+                        return {
+                            '--head-color-stop1': hsl(0, 0, 30), // 灰黑色头顶
+                            '--head-color-stop2': hsl(0, 0, 20),
+                            '--body-color-stop1': hsl(hue, 40, 50), // 灰绿色胸部
+                            '--body-color-stop2': hsl(hue, 60, 40),
+                            '--wing-primary': hsl(hue, 70, 35), // 深绿翅膀
+                            '--wing-secondary': hsl(200, 60, 30), // 翅膀覆羽带蓝
+                            '--tail-color': hsl(350, 70, 30), // 暗红色尾巴 (特征)
+                            '--cheek-patch': hsl(0, 0, 80), // 绿颊的脸颊经常是白/灰色
+                            '--bg-color': '#f1f8e9'
+                        };
+                    }
+                },
+                {
+                    name: "Blue Mutation (蓝化种)",
+                    type: "blue",
+                    // 蓝化：整体蓝/青，头灰，尾巴灰蓝
+                    baseHue: 190,
+                    generate: () => {
+                        const hue = randomInt(180, 210);
+                        return {
+                            '--head-color-stop1': hsl(hue, 20, 70), // 浅灰蓝头
+                            '--head-color-stop2': hsl(hue, 20, 50),
+                            '--body-color-stop1': hsl(hue, 60, 80), // 浅蓝胸
+                            '--body-color-stop2': hsl(hue, 70, 60),
+                            '--wing-primary': hsl(hue, 50, 50), 
+                            '--wing-secondary': hsl(hue + 20, 60, 40),
+                            '--tail-color': hsl(hue, 40, 30),
+                            '--cheek-patch': hsl(hue, 30, 90), // 脸颊很淡
+                            '--bg-color': '#e0f7fa'
+                        };
+                    }
                 }
+            ];
+
+            // 1. 随机选择一个变种 (Morph)
+            const selectedMorph = morphs[Math.floor(Math.random() * morphs.length)];
+            
+            // 2. 生成具体颜色
+            const colors = selectedMorph.generate();
+
+            // 3. 应用颜色到 CSS 变量
+            for (const [key, value] of Object.entries(colors)) {
+                root.style.setProperty(key, value);
             }
-        }
 
-        // 5. 批量更新所有鹦鹉部件颜色（换色核心逻辑）
-        function updateAllParrotColors() {
-            PARROT_PARTS.forEach(partId => {
-                updatePartColor(partId);
-            });
-        }
-
-        // 6. 页面加载（刷新）时触发换色（核心：实现仅刷新网页换色，无自动变化）
-        window.onload = function() {
-            updateAllParrotColors();
-        };
+            // 4. 更新显示的名称（可选）
+            // nameElement.innerText = selectedMorph.name; 
+            // 如果想要纯净界面，可以把上面这行注释掉
+        });
     </script>
 </body>
 </html>
