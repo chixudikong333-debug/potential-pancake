@@ -2,127 +2,37 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>Typora 风格静态主页</title>
+  <title>Typora Style Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-    :root {
-      --bg-color: #ffffff;
-      --text-color: #333;
-      --subtle-text: #666;
-      --border-color: #e5e5e5;
-      --code-bg: #f6f8fa;
-      --quote-bg: #f9f9f9;
-      --accent: #3a7afe;
-    }
-
     body {
       margin: 0;
-      background: var(--bg-color);
-      color: var(--text-color);
+      background: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont,
                    "Segoe UI", "PingFang SC",
                    "Hiragino Sans GB",
                    "Microsoft YaHei",
                    Arial, sans-serif;
-      line-height: 1.75;
+      color: #333;
     }
 
-    /* 主体内容区域 */
     .container {
       max-width: 860px;
       margin: 0 auto;
-      padding: 40px 24px 80px;
+      padding: 60px 24px;
     }
 
-    /* 标题样式 */
-    h1, h2, h3, h4 {
-      font-weight: 600;
-      margin-top: 2.2em;
-      margin-bottom: 0.8em;
-    }
-
-    h1 {
-      font-size: 2.2em;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 0.4em;
-    }
-
-    h2 {
-      font-size: 1.7em;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 0.3em;
-    }
-
-    h3 {
-      font-size: 1.35em;
-    }
-
-    p {
-      margin: 0.8em 0;
-    }
-
-    /* 链接 */
-    a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* 列表 */
-    ul, ol {
-      padding-left: 1.5em;
-    }
-
-    li {
-      margin: 0.4em 0;
-    }
-
-    /* 引用 */
-    blockquote {
-      margin: 1.2em 0;
-      padding: 0.8em 1em;
-      background: var(--quote-bg);
-      border-left: 4px solid var(--accent);
-      color: var(--subtle-text);
-    }
-
-    /* 代码块 */
-    pre {
-      background: var(--code-bg);
-      padding: 1em;
-      overflow-x: auto;
-      border-radius: 6px;
-      font-size: 0.95em;
-    }
-
-    code {
-      background: var(--code-bg);
-      padding: 0.15em 0.4em;
-      border-radius: 4px;
-      font-family: Consolas, Monaco, monospace;
-      font-size: 0.95em;
-    }
-
-    /* 图片 */
     img {
       max-width: 100%;
       display: block;
-      margin: 1.5em auto;
+      margin: 0 auto;
       border-radius: 6px;
     }
 
-    /* 页脚 */
-    footer {
-      margin-top: 80px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border-color);
-      color: var(--subtle-text);
-      font-size: 0.9em;
-      text-align: center;
+    /* Typora 风格的轻微阴影（可删） */
+    img {
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
     }
   </style>
 </head>
@@ -130,51 +40,14 @@
 <body>
   <div class="container">
 
-    <h1>Typora 风格静态主页</h1>
-
-    <p>
-      这是一个仿 <strong>Typora Markdown 预览风格</strong> 的静态 HTML 页面，
-      适合用作说明文档、项目主页或 GitHub Pages。
-    </p>
-
-    <blockquote>
-      ✨ 特点：简洁、专注阅读、无多余装饰
-    </blockquote>
-
-    <h2>📷 示例图片（Base64）</h2>
-
-    <p>下面是一个 Base64 图片插入示例：</p>
-
-    <!-- ===== Base64 图片插入位置 ① 开始 ===== -->
+    <!-- ================= Base64 图片插入位置 ================= -->
     <!--
-      将下面 src="" 中的内容替换为：
-      data:image/png;base64,你的Base64字符串
+      使用方法：
+      将下面 src="" 替换为：
+      data:image/png;base64,你的Base64图片数据
     -->
-    <img src="data:image/png;base64,在这里粘贴你的Base64图片数据" alt="示例图片">
-    <!-- ===== Base64 图片插入位置 ① 结束 ===== -->
-
-    <h2>📄 Markdown 风格内容</h2>
-
-    <h3>无序列表</h3>
-    <ul>
-      <li>简洁排版</li>
-      <li>舒适行距</li>
-      <li>接近 Typora 默认主题</li>
-    </ul>
-
-    <h3>代码块示例</h3>
-    <pre><code>&lt;img src="data:image/jpeg;base64,..." alt="Base64 图片"&gt;
-</code></pre>
-
-    <h2>🖼 再插入一张图片</h2>
-
-    <!-- ===== Base64 图片插入位置 ② 开始 ===== -->
-    <img src="data:image/jpeg;base64,在这里粘贴你的Base64图片数据" alt="第二张图片">
-    <!-- ===== Base64 图片插入位置 ② 结束 ===== -->
-
-    <footer>
-      © 2026 · Typora Style Static Page
-    </footer>
+    <img src="data:image/png;base64,在这里粘贴你的Base64图片数据" alt="Base64 Image">
+    <!-- ======================================================= -->
 
   </div>
 </body>
