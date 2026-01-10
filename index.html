@@ -1,216 +1,181 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>完全真实感小太阳主页</title>
-    <style>
-        /* 核心思路：
-           使用 CSS 变量来动态控制滤镜参数。
-           JS 会随机生成这些参数，应用到真实照片上。
-        */
-        :root {
-            /* 默认值 (原始绿颊) */
-            --bg-color: #e8eAe8;
-            --accent-color: #888;
-            /* 滤镜变量 */
-            --hue-rotate: 0deg;
-            --saturate: 100%;
-            --brightness: 100%;
-            --contrast: 100%;
-            --sepia: 0%;
-        }
+  <meta charset="UTF-8">
+  <title>Typora 风格静态主页</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            overflow: hidden;
-            transition: background-color 0.8s ease;
-        }
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #333;
+      --subtle-text: #666;
+      --border-color: #e5e5e5;
+      --code-bg: #f6f8fa;
+      --quote-bg: #f9f9f9;
+      --accent: #3a7afe;
+    }
 
-        .stage {
-            position: relative;
-            width: 90%;
-            max-width: 1000px;
-            height: 80vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 20px;
-            /* 柔和的环境光晕 */
-            box-shadow: 
-                inset 0 0 100px rgba(0,0,0,0.05),
-                0 20px 40px rgba(0,0,0,0.1);
-            background: radial-gradient(circle at center, rgba(255,255,255,0.4) 0%, rgba(0,0,0,0.02) 100%);
-            overflow: hidden;
-        }
+    body {
+      margin: 0;
+      background: var(--bg-color);
+      color: var(--text-color);
+      font-family: -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", "PingFang SC",
+                   "Hiragino Sans GB",
+                   "Microsoft YaHei",
+                   Arial, sans-serif;
+      line-height: 1.75;
+    }
 
-        /* 图片容器 */
-        .image-container {
-            position: relative;
-            width: auto;
-            height: 85%;
-            /* 初始状态隐藏，等待 JS 加载完成 */
-            opacity: 0;
-            transform: scale(0.98);
-            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        
-        /* 加载完成后的状态 */
-        .image-container.loaded {
-            opacity: 1;
-            transform: scale(1);
-        }
+    /* 主体内容区域 */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
 
-        /* 核心：真实照片 + 动态滤镜 
-           使用 object-fit 保持照片比例
-        */
-        .real-parrot {
-            display: block;
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            /* 关键魔法：应用动态滤镜组合。
-               drop-shadow 用于给照片中的主体增加真实的立体投影
-            */
-            filter: 
-                hue-rotate(var(--hue-rotate)) 
-                saturate(var(--saturate)) 
-                brightness(var(--brightness)) 
-                contrast(var(--contrast))
-                sepia(var(--sepia))
-                drop-shadow(0 25px 30px rgba(0,0,0,0.3));
-            
-            /* 硬件加速，防止滤镜卡顿 */
-            will-change: filter;
-            transform: translateZ(0);
-        }
+    /* 标题样式 */
+    h1, h2, h3, h4 {
+      font-weight: 600;
+      margin-top: 2.2em;
+      margin-bottom: 0.8em;
+    }
 
-        /* 文字信息 */
-        .info-panel {
-            position: absolute;
-            bottom: 30px;
-            left: 40px;
-            z-index: 10;
-        }
+    h1 {
+      font-size: 2.2em;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.4em;
+    }
 
-        h1 {
-            margin: 0;
-            font-weight: 200;
-            font-size: 2.5rem;
-            color: #333;
-            letter-spacing: -1px;
-        }
-        
-        p.morph-name {
-            margin: 5px 0 0 0;
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: var(--accent-color);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+    h2 {
+      font-size: 1.7em;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.3em;
+    }
 
-    </style>
+    h3 {
+      font-size: 1.35em;
+    }
+
+    p {
+      margin: 0.8em 0;
+    }
+
+    /* 链接 */
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* 列表 */
+    ul, ol {
+      padding-left: 1.5em;
+    }
+
+    li {
+      margin: 0.4em 0;
+    }
+
+    /* 引用 */
+    blockquote {
+      margin: 1.2em 0;
+      padding: 0.8em 1em;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--accent);
+      color: var(--subtle-text);
+    }
+
+    /* 代码块 */
+    pre {
+      background: var(--code-bg);
+      padding: 1em;
+      overflow-x: auto;
+      border-radius: 6px;
+      font-size: 0.95em;
+    }
+
+    code {
+      background: var(--code-bg);
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 0.95em;
+    }
+
+    /* 图片 */
+    img {
+      max-width: 100%;
+      display: block;
+      margin: 1.5em auto;
+      border-radius: 6px;
+    }
+
+    /* 页脚 */
+    footer {
+      margin-top: 80px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+      color: var(--subtle-text);
+      font-size: 0.9em;
+      text-align: center;
+    }
+  </style>
 </head>
+
 <body>
+  <div class="container">
 
-    <div class="stage">
-        <div class="image-container" id="imgContainer">
-            <img class="real-parrot" alt="Real Conure" src="data:image/jpeg;base64,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">
-        </div>
-        
-        <div class="info-panel">
-            <h1>Green-cheeked Conure</h1>
-            <p class="morph-name" id="morphName">Normal Wild Type</p>
-        </div>
-    </div>
+    <h1>Typora 风格静态主页</h1>
 
-    <script>
-        // 等待 DOM 加载完成
-        document.addEventListener('DOMContentLoaded', () => {
-            const root = document.documentElement;
-            const morphNameElement = document.getElementById('morphName');
-            const imgContainer = document.getElementById('imgContainer');
-            
-            // 定义真实存在的鹦鹉变种及其对应的 CSS 滤镜参数
-            // 通过精确调整色相、饱和度、亮度和对比度，模拟出不同品种的羽毛色彩
-            const morphs = [
-                {
-                    name: "Normal Wild Type",
-                    // 原始状态，不做修改
-                    filters: { hue: '0deg', saturate: '100%', brightness: '100%', contrast: '100%', sepia: '0%' },
-                    accent: '#888'
-                },
-                {
-                    name: "Turquoise Mutation",
-                    // 蓝化种：大幅度旋转色相至蓝色区，降低饱和度，提高亮度和对比度以显现冰蓝色
-                    filters: { hue: '175deg', saturate: '90%', brightness: '115%', contrast: '110%', sepia: '0%' },
-                    accent: '#4DB6AC' // 配色强调色
-                },
-                {
-                    name: "Pineapple Mutation",
-                    // 凤梨种：色相偏暖(黄红)，大幅提高饱和度和亮度，增加一点怀旧色调模拟暖色羽毛
-                    filters: { hue: '-35deg', saturate: '150%', brightness: '120%', contrast: '105%', sepia: '25%' },
-                    accent: '#FFB300'
-                },
-                {
-                    name: "Yellow-Sided Mutation",
-                    // 黄边种：色相微调至黄色，提高亮度和对比度，使黄色区域更鲜明
-                    filters: { hue: '-15deg', saturate: '130%', brightness: '115%', contrast: '115%', sepia: '10%' },
-                    accent: '#FDD835'
-                },
-                {
-                    name: "Cinnamon Mutation",
-                    // 肉桂种：色相偏暖，降低饱和度，增加怀旧色调，模拟褪色的肉桂感
-                    filters: { hue: '-25deg', saturate: '85%', brightness: '110%', contrast: '95%', sepia: '40%' },
-                    accent: '#8D6E63'
-                },
-                {
-                    name: "Suncheek Mutation",
-                    // 太阳种 (极其鲜艳)：暖色相，极高饱和度和亮度，模拟金光闪闪的感觉
-                    filters: { hue: '-45deg', saturate: '180%', brightness: '130%', contrast: '110%', sepia: '30%' },
-                    accent: '#FF5722'
-                },
-                 {
-                    name: "Mint/Dilute Mutation",
-                    // 薄荷/稀释种：冷色相，极低饱和度，极高亮度，模拟淡色羽毛
-                    filters: { hue: '160deg', saturate: '60%', brightness: '140%', contrast: '90%', sepia: '0%' },
-                    accent: '#B2DFDB'
-                }
-            ];
+    <p>
+      这是一个仿 <strong>Typora Markdown 预览风格</strong> 的静态 HTML 页面，
+      适合用作说明文档、项目主页或 GitHub Pages。
+    </p>
 
-            // 1. 随机选择一个变种
-            const selectedMorph = morphs[Math.floor(Math.random() * morphs.length)];
-            
-            // 2. 将选定变种的滤镜参数应用到 CSS 变量中
-            const f = selectedMorph.filters;
-            root.style.setProperty('--hue-rotate', f.hue);
-            root.style.setProperty('--saturate', f.saturate);
-            root.style.setProperty('--brightness', f.brightness);
-            root.style.setProperty('--contrast', f.contrast);
-            root.style.setProperty('--sepia', f.sepia);
-            
-            // 更新强调色和文字
-            root.style.setProperty('--accent-color', selectedMorph.accent);
-            morphNameElement.textContent = selectedMorph.name;
+    <blockquote>
+      ✨ 特点：简洁、专注阅读、无多余装饰
+    </blockquote>
 
-            // 3. 图片加载并应用滤镜后，显示图片容器 (平滑过渡效果)
-            // 使用一个小延时确保滤镜已准备好
-            setTimeout(() => {
-                 imgContainer.classList.add('loaded');
-            }, 100);
+    <h2>📷 示例图片（Base64）</h2>
 
-        });
-    </script>
+    <p>下面是一个 Base64 图片插入示例：</p>
+
+    <!-- ===== Base64 图片插入位置 ① 开始 ===== -->
+    <!--
+      将下面 src="" 中的内容替换为：
+      data:image/png;base64,你的Base64字符串
+    -->
+    <img src="data:image/png;base64,在这里粘贴你的Base64图片数据" alt="示例图片">
+    <!-- ===== Base64 图片插入位置 ① 结束 ===== -->
+
+    <h2>📄 Markdown 风格内容</h2>
+
+    <h3>无序列表</h3>
+    <ul>
+      <li>简洁排版</li>
+      <li>舒适行距</li>
+      <li>接近 Typora 默认主题</li>
+    </ul>
+
+    <h3>代码块示例</h3>
+    <pre><code>&lt;img src="data:image/jpeg;base64,..." alt="Base64 图片"&gt;
+</code></pre>
+
+    <h2>🖼 再插入一张图片</h2>
+
+    <!-- ===== Base64 图片插入位置 ② 开始 ===== -->
+    <img src="data:image/jpeg;base64,在这里粘贴你的Base64图片数据" alt="第二张图片">
+    <!-- ===== Base64 图片插入位置 ② 结束 ===== -->
+
+    <footer>
+      © 2026 · Typora Style Static Page
+    </footer>
+
+  </div>
 </body>
 </html>
